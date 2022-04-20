@@ -28,6 +28,7 @@ import com.catenax.dft.usecases.csvHandler.AbstractCsvHandlerUseCase;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -51,13 +52,17 @@ public class EDCAspectHandlerUseCase extends AbstractCsvHandlerUseCase<Aspect, A
     @Override
     protected Aspect executeUseCase(Aspect input, String processId) {
 
+        //create asset
         AssetEntryRequest assetEntryRequest = assetMapper.getAsset(input.getShellId() + "-" + input.getSubModelId());
-        edcGateway.createAsset(assetEntryRequest);
+        HttpStatus httpStatus = edcGateway.createAsset(assetEntryRequest);
+        if (httpStatus != HttpStatus.NO_CONTENT){
+            throw new RuntimeException("Asset not created in EDC");
+        }
         //create policies
 
         //create contractDefinitions
-        List<Criterion> criterias = new ArrayList<>();
-        criterias.add(Criterion.builder()
+        List<Criterion> criteria = new ArrayList<>();
+        criteria.add(Criterion.builder()
                 .left("asset.prop.id")
                 .op("in")
                 .right(input.getUuid())
@@ -66,7 +71,7 @@ public class EDCAspectHandlerUseCase extends AbstractCsvHandlerUseCase<Aspect, A
                 .contractPolicyId("")
                 .accessPolicyId("")
                 .id(UUIdGenerator.getUuid())
-                .criteria(criterias)
+                .criteria(criteria)
                 .build();
         edcGateway.createContractDefinition(createContractDefinitionRequest);
 

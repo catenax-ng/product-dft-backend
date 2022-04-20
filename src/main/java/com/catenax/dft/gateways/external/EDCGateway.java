@@ -34,25 +34,24 @@ public class EDCGateway {
     private String edcEndpoint;
     private String API_KEY = "X-Api-Key";
     private String API_VALUE = "123456";
+    private RestTemplate restTemplate = new RestTemplate();
 
-    public void createAsset(AssetEntryRequest request) {
+    public HttpStatus createAsset(AssetEntryRequest request) {
         final String assetResource = "/assets";
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add(API_KEY, API_VALUE);
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<AssetEntryRequest> entity = new HttpEntity<>(request, headers);
-        restTemplate.postForEntity(edcEndpoint + assetResource, entity, String.class);
-
+        HttpStatus status = restTemplate.postForEntity(edcEndpoint + assetResource, entity, String.class).getStatusCode();
+        return status;
     }
 
-    public void createContractDefinition(CreateContractDefinitionRequest request) {
+    public HttpStatus createContractDefinition(CreateContractDefinitionRequest request) {
         final String contractDefinitionResource = "/contractdefinitions";
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add(API_KEY, API_VALUE);
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<CreateContractDefinitionRequest> entity = new HttpEntity<>(request, headers);
-        restTemplate.postForEntity(edcEndpoint + contractDefinitionResource, entity, String.class);
+        return restTemplate.postForEntity(edcEndpoint + contractDefinitionResource, entity, String.class).getStatusCode();
     }
 }

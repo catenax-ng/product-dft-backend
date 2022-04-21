@@ -16,66 +16,30 @@
 
 package com.catenax.dft.usecases.csvHandler.aspects;
 
-import com.catenax.dft.entities.usecases.Aspect;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import com.catenax.dft.usecases.csvHandler.exceptions.UseCaseValidationException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class GenerateUuIdCsvHandlerUseCaseTest {
 
     GenerateUuIdCsvHandlerUseCase generator = new GenerateUuIdCsvHandlerUseCase(null);
-    String processId = "processIdTest";
-    private Aspect aspectWithUuid;
-    private Aspect aspectWithoutUuid;
 
-    @BeforeEach
-    void setUp() {
-        aspectWithUuid = Aspect.builder()
-                .rowNumber(0)
-                .uuid("urn:uuid:a848f840-b73b-4da8-8ae4-0c1bb8d72f67")
-                .processId("processIdTest")
-                .partInstanceId("NO-479638186238569445662893")
-                .manufacturingDate("2022-02-04T14:48:54")
-                .manufacturingCountry("DEU")
-                .manufacturerPartId("1O222E8-43")
-                .customerPartId("1O222E8-43")
-                .classification("component")
-                .nameAtManufacturer("Clutch")
-                .nameAtCustomer("Clutch")
-                .optionalIdentifierKey(null)
-                .optionalIdentifierValue(null)
-                .build();
-        aspectWithoutUuid = Aspect.builder()
-                .rowNumber(0)
-                .processId("processIdTest")
-                .partInstanceId("NO-479638186238569445662893")
-                .manufacturingDate("2022-02-04T14:48:54")
-                .manufacturingCountry("DEU")
-                .manufacturerPartId("1O222E8-43")
-                .customerPartId("1O222E8-43")
-                .classification("component")
-                .nameAtManufacturer("Clutch")
-                .nameAtCustomer("Clutch")
-                .optionalIdentifierKey(null)
-                .optionalIdentifierValue(null)
-                .build();
-    }
 
     @Test
-    @DisplayName("Testing input Aspect with uuid")
-    void executeUseCaseWithId() {
-        Aspect aspect = generator.executeUseCase(aspectWithUuid, processId);
-        assertEquals(aspect.getUuid(), "urn:uuid:a848f840-b73b-4da8-8ae4-0c1bb8d72f67");
+    @DisplayName("Testing with null input Aspect")
+    void run_nullAspect_throwsException() {
+        // Arrange
+        final String processId = "processId";
+
+        // Act
+        UseCaseValidationException exception = Assertions.assertThrows(UseCaseValidationException.class, () -> generator.run(null, processId));
+        assertEquals("Aspect", exception.getField());
+
+
     }
 
-    @Test
-    @DisplayName("Testing input Aspect without uuid")
-    void executeCaseWithoutUuid() {
-        Aspect aspect = generator.executeUseCase(aspectWithoutUuid, processId);
-        assertNotNull(aspect.getUuid());
-    }
+
 }

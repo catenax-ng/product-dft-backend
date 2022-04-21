@@ -18,8 +18,10 @@
 package com.catenax.dft.usecases.csvHandler;
 
 import com.catenax.dft.entities.database.FailureLogEntity;
+import com.catenax.dft.usecases.csvHandler.exceptions.UseCaseValidationException;
 import com.catenax.dft.usecases.logs.FailureLogsUseCase;
 import com.catenax.dft.usecases.processReport.ProcessReportUseCase;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -39,8 +41,9 @@ public abstract class AbstractCsvHandlerUseCase<I, T> implements CsvHandlerUseCa
         this.nextUseCase = nextUseCase;
     }
 
-    protected abstract T executeUseCase(I input, String processId);
+    protected abstract T executeUseCase(I input, String processId) throws UseCaseValidationException;
 
+    @SneakyThrows
     @Override
     public void run(I input, String processId) {
 
@@ -50,8 +53,10 @@ public abstract class AbstractCsvHandlerUseCase<I, T> implements CsvHandlerUseCa
             if (nextUseCase != null) {
                 nextUseCase.run(result, processId);
             }
-
+        } catch (UseCaseValidationException e) {
+            throw e;
         } catch (Exception e) {
+
             FailureLogEntity entity = FailureLogEntity.builder()
                     .uuid(UUID.randomUUID().toString())
                     .processId(processId)
@@ -59,7 +64,7 @@ public abstract class AbstractCsvHandlerUseCase<I, T> implements CsvHandlerUseCa
                     .dateTime(LocalDateTime.now())
                     .build();
             failureLogsUseCase.saveLog(entity);
-            log.debug(String.valueOf(e));
+            log.error(String.valueOf(e));
         }
     }
 

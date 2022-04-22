@@ -41,8 +41,8 @@ import static com.catenax.dft.usecases.csvHandler.CsvHandlerOrchestrator.ASPECT_
 public class MapToAspectCsvHandlerUseCase extends AbstractCsvHandlerUseCase<RowData, Aspect> {
 
     public MapToAspectCsvHandlerUseCase(GenerateUuIdCsvHandlerUseCase nextUseCase,
-                                        FailureLogUseCase failureLogsUseCase) {
-        super(nextUseCase, failureLogsUseCase);
+                                        FailureLogUseCase failureLogUseCase) {
+        super(nextUseCase, failureLogUseCase);
     }
 
     @SneakyThrows

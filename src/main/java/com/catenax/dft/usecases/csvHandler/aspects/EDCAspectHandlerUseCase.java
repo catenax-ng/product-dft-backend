@@ -46,8 +46,8 @@ public class EDCAspectHandlerUseCase extends AbstractCsvHandlerUseCase<Aspect, A
     public EDCAspectHandlerUseCase(StoreAspectCsvHandlerUseCase nextUseCase,
                                    AssetEntryRequestMapper assetMapper,
                                    EDCGateway edcGateway,
-                                   FailureLogUseCase failureLogsUseCase) {
-        super(nextUseCase,failureLogsUseCase);
+                                   FailureLogUseCase failureLogUseCase) {
+        super(nextUseCase,failureLogUseCase);
         this.assetMapper = assetMapper;
         this.edcGateway = edcGateway;
     }

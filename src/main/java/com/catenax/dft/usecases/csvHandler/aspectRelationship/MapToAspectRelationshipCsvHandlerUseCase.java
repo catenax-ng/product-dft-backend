@@ -39,8 +39,8 @@ import static com.catenax.dft.usecases.csvHandler.CsvHandlerOrchestrator.ASPECT_
 public class MapToAspectRelationshipCsvHandlerUseCase extends AbstractCsvHandlerUseCase<RowData, AspectRelationship> {
 
     public MapToAspectRelationshipCsvHandlerUseCase(FetchCatenaXIdCsvHandlerUseCase nextUseCase,
-                                                    FailureLogUseCase failureLogsUseCase) {
-        super(nextUseCase, failureLogsUseCase);
+                                                    FailureLogUseCase failureLogUseCase) {
+        super(nextUseCase, failureLogUseCase);
     }
 
     @Override

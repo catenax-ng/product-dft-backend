@@ -29,8 +29,8 @@ import org.springframework.stereotype.Service;
 public class GenerateUuIdCsvHandlerUseCase extends AbstractCsvHandlerUseCase<Aspect, Aspect> {
 
     public GenerateUuIdCsvHandlerUseCase(DigitalTwinsAspectCsvHandlerUseCase nextUseCase,
-                                         FailureLogUseCase failureLogsUseCase) {
-        super(nextUseCase, failureLogsUseCase);
+                                         FailureLogUseCase failureLogUseCase) {
+        super(nextUseCase, failureLogUseCase);
     }
 
     @SneakyThrows

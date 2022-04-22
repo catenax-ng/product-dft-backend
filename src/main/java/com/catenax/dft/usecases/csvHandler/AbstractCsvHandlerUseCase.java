@@ -29,11 +29,11 @@ import java.util.UUID;
 public abstract class AbstractCsvHandlerUseCase<I, T> implements CsvHandlerUseCase<I> {
 
     protected CsvHandlerUseCase<T> nextUseCase;
-    private FailureLogUseCase failureLogsUseCase;
+    private FailureLogUseCase failureLogUseCase;
 
-    public AbstractCsvHandlerUseCase(CsvHandlerUseCase<T> nextUseCase, FailureLogUseCase failureLogsUseCase) {
+    public AbstractCsvHandlerUseCase(CsvHandlerUseCase<T> nextUseCase, FailureLogUseCase failureLogUseCase) {
         this.nextUseCase = nextUseCase;
-        this.failureLogsUseCase = failureLogsUseCase;
+        this.failureLogUseCase = failureLogUseCase;
     }
 
     protected abstract T executeUseCase(I input, String processId);
@@ -55,7 +55,7 @@ public abstract class AbstractCsvHandlerUseCase<I, T> implements CsvHandlerUseCa
                     .log(e.getMessage())
                     .dateTime(LocalDateTime.now())
                     .build();
-            failureLogsUseCase.saveLog(entity);
+            failureLogUseCase.saveLog(entity);
             log.error(String.valueOf(e));
         }
     }

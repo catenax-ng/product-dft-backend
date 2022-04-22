@@ -35,8 +35,8 @@ public class StoreAspectRelationshipCsvHandlerUseCase extends AbstractCsvHandler
 
     public StoreAspectRelationshipCsvHandlerUseCase(AspectRelationshipRepository aspectRelationshipRepository,
                                                     AspectRelationshipMapper mapper,
-                                                    FailureLogUseCase failureLogsUseCase) {
-        super(null, failureLogsUseCase);
+                                                    FailureLogUseCase failureLogUseCase) {
+        super(null, failureLogUseCase);
         this.repository = aspectRelationshipRepository;
         this.mapper = mapper;
     }

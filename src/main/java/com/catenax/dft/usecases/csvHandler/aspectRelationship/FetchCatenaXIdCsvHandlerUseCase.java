@@ -35,8 +35,8 @@ public class FetchCatenaXIdCsvHandlerUseCase extends AbstractCsvHandlerUseCase<A
 
     public FetchCatenaXIdCsvHandlerUseCase(DigitalTwinsAspectRelationShipCsvHandlerUseCase nextUseCase,
                                            AspectRepository repository,
-                                           FailureLogUseCase failureLogsUseCase) {
-        super(nextUseCase, failureLogsUseCase);
+                                           FailureLogUseCase failureLogUseCase) {
+        super(nextUseCase, failureLogUseCase);
         this.repository = repository;
     }
 

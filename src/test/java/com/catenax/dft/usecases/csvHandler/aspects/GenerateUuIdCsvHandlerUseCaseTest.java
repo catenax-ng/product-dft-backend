@@ -19,7 +19,7 @@ package com.catenax.dft.usecases.csvHandler.aspects;
 import com.catenax.dft.entities.database.FailureLogEntity;
 import com.catenax.dft.entities.usecases.Aspect;
 import com.catenax.dft.usecases.common.UUIdGenerator;
-import com.catenax.dft.usecases.logs.FailureLogsUseCase;
+import com.catenax.dft.usecases.logs.FailureLogUseCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +34,7 @@ import static org.mockito.Mockito.*;
 public class GenerateUuIdCsvHandlerUseCaseTest {
 
     @Mock
-    private FailureLogsUseCase logUseCase;
+    private FailureLogUseCase logUseCase;
     @Mock
     private DigitalTwinsAspectCsvHandlerUseCase digitalTwinUseCase;
     @InjectMocks

@@ -25,10 +25,10 @@ import com.catenax.dft.gateways.external.EDCGateway;
 import com.catenax.dft.mapper.AssetEntryRequestMapper;
 import com.catenax.dft.usecases.common.UUIdGenerator;
 import com.catenax.dft.usecases.csvHandler.AbstractCsvHandlerUseCase;
-import com.catenax.dft.usecases.logs.FailureLogsUseCase;
+import com.catenax.dft.usecases.csvHandler.exceptions.UseCaseValidationException;
+import com.catenax.dft.usecases.logs.FailureLogUseCase;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +46,7 @@ public class EDCAspectHandlerUseCase extends AbstractCsvHandlerUseCase<Aspect, A
     public EDCAspectHandlerUseCase(StoreAspectCsvHandlerUseCase nextUseCase,
                                    AssetEntryRequestMapper assetMapper,
                                    EDCGateway edcGateway,
-                                   FailureLogsUseCase failureLogsUseCase) {
+                                   FailureLogUseCase failureLogsUseCase) {
         super(nextUseCase,failureLogsUseCase);
         this.assetMapper = assetMapper;
         this.edcGateway = edcGateway;
@@ -55,7 +55,18 @@ public class EDCAspectHandlerUseCase extends AbstractCsvHandlerUseCase<Aspect, A
     @SneakyThrows
     @Override
     protected Aspect executeUseCase(Aspect input, String processId) {
-
+        if (input == null) {
+            throw new UseCaseValidationException("Aspect cannot be null");
+        }
+        if (input.getShellId() == null || input.getShellId().isBlank()) {
+            throw new UseCaseValidationException("Aspect must have a valid shellId");
+        }
+        if (input.getSubModelId() == null || input.getSubModelId().isBlank()) {
+            throw new UseCaseValidationException("Aspect must have a valid subModelId");
+        }
+        if (processId == null || processId.isBlank()){
+            throw new UseCaseValidationException("processId cannot be null nor empty");
+        }
         //create asset
         AssetEntryRequest assetEntryRequest = assetMapper.getAsset(input.getShellId() + "-" + input.getSubModelId());
         HttpStatus httpStatus = edcGateway.createAsset(assetEntryRequest);

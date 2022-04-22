@@ -18,12 +18,9 @@
 package com.catenax.dft.usecases.csvHandler;
 
 import com.catenax.dft.entities.database.FailureLogEntity;
-import com.catenax.dft.usecases.csvHandler.exceptions.UseCaseValidationException;
-import com.catenax.dft.usecases.logs.FailureLogsUseCase;
-import com.catenax.dft.usecases.processReport.ProcessReportUseCase;
+import com.catenax.dft.usecases.logs.FailureLogUseCase;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -32,9 +29,9 @@ import java.util.UUID;
 public abstract class AbstractCsvHandlerUseCase<I, T> implements CsvHandlerUseCase<I> {
 
     protected CsvHandlerUseCase<T> nextUseCase;
-    private FailureLogsUseCase failureLogsUseCase;
+    private FailureLogUseCase failureLogsUseCase;
 
-    public AbstractCsvHandlerUseCase(CsvHandlerUseCase<T> nextUseCase, FailureLogsUseCase failureLogsUseCase) {
+    public AbstractCsvHandlerUseCase(CsvHandlerUseCase<T> nextUseCase, FailureLogUseCase failureLogsUseCase) {
         this.nextUseCase = nextUseCase;
         this.failureLogsUseCase = failureLogsUseCase;
     }

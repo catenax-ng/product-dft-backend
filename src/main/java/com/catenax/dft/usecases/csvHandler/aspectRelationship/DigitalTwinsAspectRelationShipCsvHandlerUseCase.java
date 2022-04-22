@@ -33,7 +33,7 @@ import com.catenax.dft.mapper.AspectMapper;
 import com.catenax.dft.usecases.common.UUIdGenerator;
 import com.catenax.dft.usecases.csvHandler.AbstractCsvHandlerUseCase;
 import com.catenax.dft.usecases.csvHandler.exceptions.CsvHandlerUseCaseException;
-import com.catenax.dft.usecases.logs.FailureLogsUseCase;
+import com.catenax.dft.usecases.logs.FailureLogUseCase;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -69,7 +69,7 @@ public class DigitalTwinsAspectRelationShipCsvHandlerUseCase extends AbstractCsv
                                                            AspectRepository aspectRepository,
                                                            AspectMapper aspectMapper,
                                                            StoreAspectRelationshipCsvHandlerUseCase nextUseCase,
-                                                           FailureLogsUseCase failureLogsUseCase) {
+                                                           FailureLogUseCase failureLogsUseCase) {
         super(nextUseCase, failureLogsUseCase);
         this.gateway = gateway;
         this.aspectRepository = aspectRepository;

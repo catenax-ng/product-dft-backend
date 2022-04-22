@@ -22,7 +22,7 @@ import com.catenax.dft.entities.usecases.Aspect;
 import com.catenax.dft.gateways.database.AspectRepository;
 import com.catenax.dft.mapper.AspectMapper;
 import com.catenax.dft.usecases.csvHandler.AbstractCsvHandlerUseCase;
-import com.catenax.dft.usecases.logs.FailureLogsUseCase;
+import com.catenax.dft.usecases.logs.FailureLogUseCase;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +33,7 @@ public class StoreAspectCsvHandlerUseCase extends AbstractCsvHandlerUseCase<Aspe
     private final AspectRepository aspectRepository;
     private final AspectMapper aspectMapper;
 
-    public StoreAspectCsvHandlerUseCase(AspectRepository aspectRepository, AspectMapper mapper, FailureLogsUseCase failureLogsUseCase) {
+    public StoreAspectCsvHandlerUseCase(AspectRepository aspectRepository, AspectMapper mapper, FailureLogUseCase failureLogsUseCase) {
         super(null, failureLogsUseCase);
         this.aspectRepository = aspectRepository;
         this.aspectMapper = mapper;

@@ -16,25 +16,23 @@
 
 package com.catenax.dft.usecases.csvHandler.aspects;
 
+import com.catenax.dft.entities.database.FailureLogEntity;
 import com.catenax.dft.entities.edc.request.asset.AssetEntryRequest;
-import com.catenax.dft.entities.edc.request.asset.AssetRequest;
-import com.catenax.dft.entities.edc.request.asset.DataAddressRequest;
+import com.catenax.dft.entities.edc.request.contractDefinition.CreateContractDefinitionRequest;
 import com.catenax.dft.entities.usecases.Aspect;
 import com.catenax.dft.gateways.external.EDCGateway;
 import com.catenax.dft.mapper.AssetEntryRequestMapper;
-import org.junit.jupiter.api.BeforeEach;
+import com.catenax.dft.usecases.logs.FailureLogUseCase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 
-import java.util.HashMap;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.isA;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class EDCAspectHandlerUseCaseTest {
@@ -43,62 +41,135 @@ class EDCAspectHandlerUseCaseTest {
     private AssetEntryRequestMapper assetMapper;
     @Mock
     private EDCGateway edcGateway;
+    @Mock
+    private FailureLogUseCase logUseCase;
+    @Mock
+    private StoreAspectCsvHandlerUseCase storeAspectCsvHandlerUseCase;
 
     @InjectMocks
-    private EDCAspectHandlerUseCase edcAspectHandlerUseCase;
+    private EDCAspectHandlerUseCase useCase;
 
     private Aspect input;
-    private String processId = "processIdTest";
+    private String processId = "processId";
 
-    @BeforeEach
-    void setUp() {
-        input = Aspect.builder()
-                .rowNumber(0)
-                .uuid("urn:uuid:a848f840-b73b-4da8-8ae4-0c1bb8d72f67")
-                .processId("processIdTest")
-                .partInstanceId("NO-479638186238569445662893")
-                .manufacturingDate("2022-02-04T14:48:54")
-                .manufacturingCountry("DEU")
-                .manufacturerPartId("1O222E8-43")
-                .customerPartId("1O222E8-43")
-                .classification("component")
-                .nameAtManufacturer("Clutch")
-                .nameAtCustomer("Clutch")
-                .optionalIdentifierKey(null)
-                .optionalIdentifierValue(null)
-                .shellId("someShellId")
-                .subModelId("someModelId")
-                .build();
+
+    @Test
+    public void run_nullAspect_shouldStoreFailureLog() {
+        // Arrange
+
+        // Act
+        useCase.run(null, processId);
+
+        // Assert
+        verify(logUseCase, only()).saveLog(argThat((FailureLogEntity entity) ->
+                "Aspect cannot be null".equals(entity.getLog()) && processId.equals(entity.getProcessId()))
+        );
     }
 
     @Test
-    void executeUseCase() {
-        HashMap<String, String> assetProperties = new HashMap<>();
-        assetProperties.put("asset:prop:id", "someShellId-someModelId");
-        assetProperties.put("asset:prop:contenttype", "application/json");
-        assetProperties.put("asset:prop:name", "Serialized Part - Submodel SerialPartTypization");
-        assetProperties.put("asset:prop:description", "...");
-        assetProperties.put("asset:prop:version", "1.0.0");
-        AssetRequest assetRequest = AssetRequest.builder().properties(assetProperties).build();
+    public void run_nullAspectWithNextUseCaseSet_cannotCallNextUseCase() {
+        // Arrange
 
-        HashMap<String, String> dataAddressProperties = new HashMap<>();
-        dataAddressProperties.put("type", "AzureStorage");
-        dataAddressProperties.put("endpoint", "http://some/endpoint");
-        dataAddressProperties.put("name", "Backend Data Service - AAS Server");
-        dataAddressProperties.put("authKey", "");
-        dataAddressProperties.put("authCode", "");
-        DataAddressRequest dataAddressRequest = DataAddressRequest.builder().properties(dataAddressProperties).build();
-        AssetEntryRequest assetEntryRequest = AssetEntryRequest.builder().asset(assetRequest)
-                .dataAddress(dataAddressRequest).build();
+        // Act
+        useCase.run(null, processId);
 
-        //AssetEntryRequestMapper assetMapper = mock(AssetEntryRequestMapper.class);
-        when(assetMapper.getAsset(input.getShellId() + "-" + input.getSubModelId()))
-                .thenReturn(assetEntryRequest);
-        //EDCGateway edcGateway = mock(EDCGateway.class);
-        when(edcGateway.createAsset(assetEntryRequest))
+        // Assert
+        verify(storeAspectCsvHandlerUseCase, never()).run(any(), anyString());
+    }
+
+    @Test
+    public void run_AspectWithNullShellId_shouldStoreFailureLog() {
+        // Arrange
+        input = Aspect.builder().build();
+
+        // Act
+        useCase.run(input, processId);
+
+        // Assert
+        verify(logUseCase, only()).saveLog(argThat((FailureLogEntity entity) ->
+                "Aspect must have a valid shellId".equals(entity.getLog())));
+        verify(storeAspectCsvHandlerUseCase, never()).run(any(), anyString());
+    }
+
+    @Test
+    public void run_AspectWithEmptyShellId_shouldStoreFailureLog() {
+        // Arrange
+        input = Aspect.builder().shellId(" ").build();
+
+        // Act
+        useCase.run(input, processId);
+
+        // Assert
+        verify(logUseCase, only()).saveLog(argThat((FailureLogEntity entity) ->
+                "Aspect must have a valid shellId".equals(entity.getLog())));
+        verify(storeAspectCsvHandlerUseCase, never()).run(any(), anyString());
+    }
+
+    @Test
+    public void run_AspectWithNullSubModelId_shouldStoreFailureLog() {
+        // Arrange
+        input = Aspect.builder().shellId("shellId").build();
+
+        // Act
+        useCase.run(input, processId);
+
+        // Assert
+        verify(logUseCase, only()).saveLog(argThat((FailureLogEntity entity) ->
+                "Aspect must have a valid subModelId".equals(entity.getLog())));
+        verify(storeAspectCsvHandlerUseCase, never()).run(any(), anyString());
+    }
+
+    @Test
+    public void run_shouldCallRequestAssetOnce() {
+        // Arrange
+        input = Aspect.builder().shellId("shellId").subModelId("subModelId").build();
+
+        // Act
+        useCase.run(input, processId);
+
+        //Assert
+        verify(assetMapper, only()).getAsset(input.getShellId() + "-" + input.getSubModelId());
+    }
+
+    @Test
+    public void run_shouldCallCreateAssetOnce() {
+        // Arrange
+        input = Aspect.builder().shellId("shellId").subModelId("subModelId").build();
+        when(assetMapper.getAsset(any()))
+                .thenReturn(new AssetEntryRequest());
+
+        // Act
+        useCase.run(input, processId);
+
+        // Assert
+        verify(edcGateway, only()).createAsset(isA(AssetEntryRequest.class));
+    }
+
+    @Test
+    public void run_EDCException_shouldStoreFailureLog(){
+        // Arrange
+        input = Aspect.builder().shellId("shellId").subModelId("subModelId").build();
+
+        // Act
+        useCase.run(input, processId);
+
+        // Assert
+        verify(logUseCase, only()).saveLog(argThat((FailureLogEntity entity) ->
+                "Asset not created in EDC".equals(entity.getLog())));
+        verify(storeAspectCsvHandlerUseCase, never()).run(any(), anyString());
+    }
+
+    @Test
+    public void run_shouldCallCreateContractDefinitionOnce() {
+        // Arrange
+        input = Aspect.builder().shellId("shellId").subModelId("subModelId").build();
+        when(edcGateway.createAsset(any()))
                 .thenReturn(HttpStatus.NO_CONTENT);
-        //EDCAspectHandlerUseCase edcAspectHandlerUseCase = mock(EDCAspectHandlerUseCase.class);
-        Aspect returnedAspect = edcAspectHandlerUseCase.executeUseCase(input, processId);
-        assertEquals(input, returnedAspect);
+
+        // Act
+        useCase.run(input, processId);
+
+        // Assert
+        verify(edcGateway, times(1)).createContractDefinition(isA(CreateContractDefinitionRequest.class));
     }
 }

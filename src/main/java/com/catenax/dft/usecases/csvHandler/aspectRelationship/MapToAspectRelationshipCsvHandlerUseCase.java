@@ -21,6 +21,7 @@ import com.catenax.dft.entities.csv.RowData;
 import com.catenax.dft.entities.usecases.AspectRelationship;
 import com.catenax.dft.usecases.csvHandler.AbstractCsvHandlerUseCase;
 import com.catenax.dft.usecases.csvHandler.exceptions.CsvHandlerUseCaseException;
+import com.catenax.dft.usecases.logs.FailureLogsUseCase;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
@@ -37,8 +38,9 @@ import static com.catenax.dft.usecases.csvHandler.CsvHandlerOrchestrator.ASPECT_
 @Service
 public class MapToAspectRelationshipCsvHandlerUseCase extends AbstractCsvHandlerUseCase<RowData, AspectRelationship> {
 
-    public MapToAspectRelationshipCsvHandlerUseCase(FetchCatenaXIdCsvHandlerUseCase nextUseCase) {
-        super(nextUseCase);
+    public MapToAspectRelationshipCsvHandlerUseCase(FetchCatenaXIdCsvHandlerUseCase nextUseCase,
+                                                    FailureLogsUseCase failureLogsUseCase) {
+        super(nextUseCase, failureLogsUseCase);
     }
 
     @Override

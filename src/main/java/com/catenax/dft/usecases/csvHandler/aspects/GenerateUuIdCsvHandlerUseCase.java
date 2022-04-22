@@ -21,21 +21,26 @@ import com.catenax.dft.entities.usecases.Aspect;
 import com.catenax.dft.usecases.common.UUIdGenerator;
 import com.catenax.dft.usecases.csvHandler.AbstractCsvHandlerUseCase;
 import com.catenax.dft.usecases.csvHandler.exceptions.UseCaseValidationException;
+import com.catenax.dft.usecases.logs.FailureLogsUseCase;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GenerateUuIdCsvHandlerUseCase extends AbstractCsvHandlerUseCase<Aspect, Aspect> {
 
-    public GenerateUuIdCsvHandlerUseCase(DigitalTwinsAspectCsvHandlerUseCase nextUseCase) {
-        super(nextUseCase);
+    public GenerateUuIdCsvHandlerUseCase(DigitalTwinsAspectCsvHandlerUseCase nextUseCase,
+                                         FailureLogsUseCase failureLogsUseCase) {
+        super(nextUseCase, failureLogsUseCase);
     }
 
     @SneakyThrows
     @Override
     protected Aspect executeUseCase(Aspect input, String processId) {
         if (input == null) {
-            throw new UseCaseValidationException("Aspect", "Aspect cannot be null");
+            throw new UseCaseValidationException("Aspect cannot be null");
+        }
+        if (processId==null){
+            throw  new UseCaseValidationException("ProcessId cannot be null");
         }
 
         if (input.getUuid() == null || input.getUuid().isBlank()) {

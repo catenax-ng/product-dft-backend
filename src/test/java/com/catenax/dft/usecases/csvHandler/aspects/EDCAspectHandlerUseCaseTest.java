@@ -37,13 +37,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-//@RunWith(MockitoJUnitRunner.class)
 class EDCAspectHandlerUseCaseTest {
 
     @Mock
     private AssetEntryRequestMapper assetMapper;
     @Mock
     private EDCGateway edcGateway;
+
     @InjectMocks
     private EDCAspectHandlerUseCase edcAspectHandlerUseCase;
 
@@ -52,7 +52,6 @@ class EDCAspectHandlerUseCaseTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
         input = Aspect.builder()
                 .rowNumber(0)
                 .uuid("urn:uuid:a848f840-b73b-4da8-8ae4-0c1bb8d72f67")

@@ -32,16 +32,14 @@ import java.util.UUID;
 public abstract class AbstractCsvHandlerUseCase<I, T> implements CsvHandlerUseCase<I> {
 
     protected CsvHandlerUseCase<T> nextUseCase;
-    @Autowired
-    protected ProcessReportUseCase processReportUseCase;
-    @Autowired
     private FailureLogsUseCase failureLogsUseCase;
 
-    public AbstractCsvHandlerUseCase(CsvHandlerUseCase<T> nextUseCase) {
+    public AbstractCsvHandlerUseCase(CsvHandlerUseCase<T> nextUseCase, FailureLogsUseCase failureLogsUseCase) {
         this.nextUseCase = nextUseCase;
+        this.failureLogsUseCase = failureLogsUseCase;
     }
 
-    protected abstract T executeUseCase(I input, String processId) throws UseCaseValidationException;
+    protected abstract T executeUseCase(I input, String processId);
 
     @SneakyThrows
     @Override
@@ -53,10 +51,7 @@ public abstract class AbstractCsvHandlerUseCase<I, T> implements CsvHandlerUseCa
             if (nextUseCase != null) {
                 nextUseCase.run(result, processId);
             }
-        } catch (UseCaseValidationException e) {
-            throw e;
         } catch (Exception e) {
-
             FailureLogEntity entity = FailureLogEntity.builder()
                     .uuid(UUID.randomUUID().toString())
                     .processId(processId)

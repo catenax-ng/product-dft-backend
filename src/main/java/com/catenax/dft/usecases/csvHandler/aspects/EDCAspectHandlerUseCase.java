@@ -25,6 +25,7 @@ import com.catenax.dft.gateways.external.EDCGateway;
 import com.catenax.dft.mapper.AssetEntryRequestMapper;
 import com.catenax.dft.usecases.common.UUIdGenerator;
 import com.catenax.dft.usecases.csvHandler.AbstractCsvHandlerUseCase;
+import com.catenax.dft.usecases.logs.FailureLogsUseCase;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +39,17 @@ import java.util.List;
 @Service
 public class EDCAspectHandlerUseCase extends AbstractCsvHandlerUseCase<Aspect, Aspect> {
 
-    @Autowired
-    private AssetEntryRequestMapper assetMapper;
-    @Autowired
-    private EDCGateway edcGateway;
+    private final AssetEntryRequestMapper assetMapper;
+    private final EDCGateway edcGateway;
 
 
-    public EDCAspectHandlerUseCase(StoreAspectCsvHandlerUseCase nextUseCase) {
-        super(nextUseCase);
+    public EDCAspectHandlerUseCase(StoreAspectCsvHandlerUseCase nextUseCase,
+                                   AssetEntryRequestMapper assetMapper,
+                                   EDCGateway edcGateway,
+                                   FailureLogsUseCase failureLogsUseCase) {
+        super(nextUseCase,failureLogsUseCase);
+        this.assetMapper = assetMapper;
+        this.edcGateway = edcGateway;
     }
 
     @SneakyThrows

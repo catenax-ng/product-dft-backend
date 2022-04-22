@@ -16,16 +16,12 @@
 
 package com.catenax.dft.usecases.csvHandler.exceptions;
 
-import lombok.Data;
 import lombok.Getter;
 
 @Getter
-public class UseCaseValidationException extends Exception{
+public class UseCaseValidationException extends Exception {
 
-    private String field;
-
-    public UseCaseValidationException(String field, String message){
+    public UseCaseValidationException(String message) {
         super(message);
-        this.field = field;
     }
 }

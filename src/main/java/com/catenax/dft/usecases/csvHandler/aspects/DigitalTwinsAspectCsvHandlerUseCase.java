@@ -28,6 +28,7 @@ import com.catenax.dft.entities.usecases.Aspect;
 import com.catenax.dft.gateways.external.DigitalTwinGateway;
 import com.catenax.dft.usecases.csvHandler.AbstractCsvHandlerUseCase;
 import com.catenax.dft.usecases.csvHandler.exceptions.CsvHandlerUseCaseException;
+import com.catenax.dft.usecases.logs.FailureLogsUseCase;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,8 +60,8 @@ public class DigitalTwinsAspectCsvHandlerUseCase extends AbstractCsvHandlerUseCa
     @Value(value = "${edc.aspect.url}")
     private String edcEndpoint;
 
-    public DigitalTwinsAspectCsvHandlerUseCase(DigitalTwinGateway gateway, EDCAspectHandlerUseCase nextUseCase) {
-        super(nextUseCase);
+    public DigitalTwinsAspectCsvHandlerUseCase(DigitalTwinGateway gateway, EDCAspectHandlerUseCase nextUseCase, FailureLogsUseCase failureLogsUseCase) {
+        super(nextUseCase, failureLogsUseCase);
         this.gateway = gateway;
     }
 

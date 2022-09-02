@@ -270,7 +270,6 @@ configuration:
     edc.vault.clientsecret=
     edc.vault.tenantid=495463c3-0991-4659-9cc5-94b4a3f7b1d6
     edc.vault.name=cxtsi-dev010-vault
-    edc.vault.clientsecret=DoKjRi5op~BnuIyXDbQdkgi12kKNsIUWMp 
     # Control- / Data- Plane configuration
     edc.transfer.proxy.endpoint=http://dft-connector-prv-dp.int.demo.catena-x.net/public
     edc.transfer.proxy.token.signer.privatekey.alias=gds-data-plane-private-key

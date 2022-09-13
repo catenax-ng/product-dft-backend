@@ -1,0 +1,20 @@
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+  tls: 
+    - secretName: tls-secret
+      hosts:
+        - dft-api.dev.demo.catena-x.net
+ 
+ resources:
+  limits:
+    cpu: 800m
+    memory: 2Gi
+  requests:
+    cpu: 300m
+    memory: 1Gi

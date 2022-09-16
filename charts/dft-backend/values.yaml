@@ -70,3 +70,30 @@ readinessProbe:
 
 postgres:
   enabled: true
+  auth:
+    existingSecret: dft-postgres-secrets
+  secret:
+    dbUrl: ""
+    dbUser: ""
+    dbPassword: ""
+    
+daps:
+  auth:
+    existingSecret: dft-edc-secrets
+  secret:
+    edchostname: ""
+    edcapikeyheader: ""
+    edcapikey: ""
+    edcdfthostname: ""
+    edcdftapikeyheader: ""
+    edcdftapikey: ""
+
+digitaltwin:
+  auth:
+    existingSecret: dft-edc-secrets
+  secret:
+    hostname: ""
+    url: ""
+    clientid: ""
+    clientsecret: ""
+  

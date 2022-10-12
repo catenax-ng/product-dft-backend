@@ -18,10 +18,21 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-package com.catenax.dft.service;
+package org.eclipse.tractusx.dft.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang3.StringUtils;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 import org.eclipse.tractusx.dft.api.ContractOfferCatalogApi;
 import org.eclipse.tractusx.dft.entities.UsagePolicy;
 import org.eclipse.tractusx.dft.entities.edc.request.policies.ConstraintRequest;
@@ -29,7 +40,6 @@ import org.eclipse.tractusx.dft.entities.edc.request.policies.Expression;
 import org.eclipse.tractusx.dft.entities.edc.request.policies.PolicyConstraintBuilderService;
 import org.eclipse.tractusx.dft.enums.NegotiationState;
 import org.eclipse.tractusx.dft.enums.PolicyAccessEnum;
-import org.eclipse.tractusx.dft.enums.Type;
 import org.eclipse.tractusx.dft.enums.UsagePolicyEnum;
 import org.eclipse.tractusx.dft.facilitator.ContractNegotiateManagement;
 import org.eclipse.tractusx.dft.gateways.database.ContractNegotiationInfoRepository;
@@ -38,7 +48,6 @@ import org.eclipse.tractusx.dft.model.contractnegotiation.ContractNegotiationDto
 import org.eclipse.tractusx.dft.model.contractoffers.ContractOffersCatalogResponse;
 import org.eclipse.tractusx.dft.model.request.ConsumerRequest;
 import org.eclipse.tractusx.dft.model.request.OfferRequest;
-import org.eclipse.tractusx.dft.service.ConsumerControlPanelService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,14 +55,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ContextConfiguration(classes = {ConsumerControlPanelService.class, String.class})
 @ExtendWith(SpringExtension.class)

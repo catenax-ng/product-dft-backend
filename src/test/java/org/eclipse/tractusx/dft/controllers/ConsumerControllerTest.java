@@ -18,11 +18,17 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-package com.catenax.dft.controllers;
+package org.eclipse.tractusx.dft.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
-import org.eclipse.tractusx.dft.controllers.ConsumerController;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.tractusx.dft.entities.UsagePolicy;
 import org.eclipse.tractusx.dft.model.request.ConsumerRequest;
 import org.eclipse.tractusx.dft.model.request.OfferRequest;
@@ -41,10 +47,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.mockito.Mockito.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ContextConfiguration(classes = {ConsumerController.class})
 @ExtendWith(SpringExtension.class)

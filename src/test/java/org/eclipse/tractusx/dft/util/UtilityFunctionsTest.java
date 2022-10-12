@@ -18,13 +18,12 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-package com.catenax.dft.util;
+package org.eclipse.tractusx.dft.util;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.eclipse.tractusx.dft.util.UtilityFunctions;
 
 class UtilityFunctionsTest {
 

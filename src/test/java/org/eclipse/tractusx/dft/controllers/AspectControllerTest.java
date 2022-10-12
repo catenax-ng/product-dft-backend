@@ -1,13 +1,19 @@
-package com.catenax.dft.controllers;
+package org.eclipse.tractusx.dft.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
-import org.eclipse.tractusx.dft.controllers.AspectController;
 import org.eclipse.tractusx.dft.entities.SubmodelJsonRequest;
 import org.eclipse.tractusx.dft.entities.UsagePolicy;
-import org.eclipse.tractusx.dft.entities.aspect.*;
+import org.eclipse.tractusx.dft.entities.aspect.AspectRequest;
+import org.eclipse.tractusx.dft.entities.aspect.AspectResponse;
+import org.eclipse.tractusx.dft.entities.aspect.LocalIdentifier;
+import org.eclipse.tractusx.dft.entities.aspect.ManufacturingInformation;
+import org.eclipse.tractusx.dft.entities.aspect.PartTypeInformation;
 import org.eclipse.tractusx.dft.entities.aspectrelationship.AspectRelationshipRequest;
 import org.eclipse.tractusx.dft.entities.aspectrelationship.AspectRelationshipResponse;
 import org.eclipse.tractusx.dft.enums.PolicyAccessEnum;
@@ -23,13 +29,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-import static org.mockito.Mockito.when;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ExtendWith(MockitoExtension.class)
 class AspectControllerTest {

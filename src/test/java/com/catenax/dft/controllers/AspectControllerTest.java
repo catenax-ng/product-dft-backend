@@ -1,21 +1,21 @@
 package com.catenax.dft.controllers;
 
-import com.catenax.dft.entities.SubmodelJsonRequest;
-
-import com.catenax.dft.entities.UsagePolicy;
-import com.catenax.dft.entities.aspect.*;
-import com.catenax.dft.entities.aspectrelationship.AspectRelationshipRequest;
-import com.catenax.dft.entities.aspectrelationship.AspectRelationshipResponse;
-
-import com.catenax.dft.enums.PolicyAccessEnum;
-import com.catenax.dft.enums.UsagePolicyEnum;
-import com.catenax.dft.usecases.aspectrelationship.GetAspectsRelationshipUseCase;
-import com.catenax.dft.usecases.aspects.GetAspectsUseCase;
-import com.catenax.dft.usecases.csvhandler.aspectrelationship.CreateAspectRelationshipUseCase;
-import com.catenax.dft.usecases.csvhandler.aspects.CreateAspectsUseCase;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.eclipse.tractusx.dft.controllers.AspectController;
+import org.eclipse.tractusx.dft.entities.SubmodelJsonRequest;
+import org.eclipse.tractusx.dft.entities.UsagePolicy;
+import org.eclipse.tractusx.dft.entities.aspect.*;
+import org.eclipse.tractusx.dft.entities.aspectrelationship.AspectRelationshipRequest;
+import org.eclipse.tractusx.dft.entities.aspectrelationship.AspectRelationshipResponse;
+import org.eclipse.tractusx.dft.enums.PolicyAccessEnum;
+import org.eclipse.tractusx.dft.enums.UsagePolicyEnum;
+import org.eclipse.tractusx.dft.usecases.aspectrelationship.GetAspectsRelationshipUseCase;
+import org.eclipse.tractusx.dft.usecases.aspects.GetAspectsUseCase;
+import org.eclipse.tractusx.dft.usecases.csvhandler.aspectrelationship.CreateAspectRelationshipUseCase;
+import org.eclipse.tractusx.dft.usecases.csvhandler.aspects.CreateAspectsUseCase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -109,7 +109,7 @@ class AspectControllerTest {
         String typeOfAccess = "restricted";
         List<String> bpnNumber = Stream.of("BPNL00000005CONS","BPNL00000005PROV").toList();
         List<UsagePolicy> list = new ArrayList<>();
-        UsagePolicy UsagePolicy = com.catenax.dft.entities.UsagePolicy.builder()
+        UsagePolicy UsagePolicy = org.eclipse.tractusx.dft.entities.UsagePolicy.builder()
                 .type(UsagePolicyEnum.ROLE).typeOfAccess(PolicyAccessEnum.RESTRICTED).value("ADMIN").build();
         list.add(UsagePolicy);
         List<AspectRequest> rowData = new ArrayList<>();
@@ -166,7 +166,7 @@ class AspectControllerTest {
         String typeOfAccess = "restricted";
         List<String> bpnNumber = Stream.of("BPNL00000005CONS","BPNL00000005PROV").toList();
         List<UsagePolicy> list = new ArrayList<>();
-        UsagePolicy UsagePolicy = com.catenax.dft.entities.UsagePolicy.builder()
+        UsagePolicy UsagePolicy = org.eclipse.tractusx.dft.entities.UsagePolicy.builder()
                 .type(UsagePolicyEnum.ROLE).typeOfAccess(PolicyAccessEnum.RESTRICTED).value("ADMIN").build();
         list.add(UsagePolicy);
         List<AspectRelationshipRequest> rowData = new ArrayList<>();

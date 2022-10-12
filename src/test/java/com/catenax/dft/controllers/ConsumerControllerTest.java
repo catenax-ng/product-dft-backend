@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -20,12 +20,14 @@
 
 package com.catenax.dft.controllers;
 
-import com.catenax.dft.entities.UsagePolicy;
-import com.catenax.dft.model.request.ConsumerRequest;
-import com.catenax.dft.model.request.OfferRequest;
-import com.catenax.dft.model.response.QueryDataOfferModel;
-import com.catenax.dft.service.ConsumerControlPanelService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.eclipse.tractusx.dft.controllers.ConsumerController;
+import org.eclipse.tractusx.dft.entities.UsagePolicy;
+import org.eclipse.tractusx.dft.model.request.ConsumerRequest;
+import org.eclipse.tractusx.dft.model.request.OfferRequest;
+import org.eclipse.tractusx.dft.model.response.QueryDataOfferModel;
+import org.eclipse.tractusx.dft.service.ConsumerControlPanelService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;

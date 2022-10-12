@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -20,24 +20,25 @@
 
 package com.catenax.dft.service;
 
-import com.catenax.dft.api.ContractOfferCatalogApi;
-import com.catenax.dft.entities.UsagePolicy;
-import com.catenax.dft.entities.edc.request.policies.ConstraintRequest;
-import com.catenax.dft.entities.edc.request.policies.Expression;
-import com.catenax.dft.entities.edc.request.policies.PolicyConstraintBuilderService;
-import com.catenax.dft.enums.NegotiationState;
-import com.catenax.dft.enums.PolicyAccessEnum;
-import com.catenax.dft.enums.Type;
-import com.catenax.dft.enums.UsagePolicyEnum;
-import com.catenax.dft.facilitator.ContractNegotiateManagement;
-import com.catenax.dft.gateways.database.ContractNegotiationInfoRepository;
-import com.catenax.dft.model.contractnegotiation.ContractAgreementResponse;
-import com.catenax.dft.model.contractnegotiation.ContractNegotiationDto;
-import com.catenax.dft.model.contractoffers.ContractOffersCatalogResponse;
-import com.catenax.dft.model.request.ConsumerRequest;
-import com.catenax.dft.model.request.OfferRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
+import org.eclipse.tractusx.dft.api.ContractOfferCatalogApi;
+import org.eclipse.tractusx.dft.entities.UsagePolicy;
+import org.eclipse.tractusx.dft.entities.edc.request.policies.ConstraintRequest;
+import org.eclipse.tractusx.dft.entities.edc.request.policies.Expression;
+import org.eclipse.tractusx.dft.entities.edc.request.policies.PolicyConstraintBuilderService;
+import org.eclipse.tractusx.dft.enums.NegotiationState;
+import org.eclipse.tractusx.dft.enums.PolicyAccessEnum;
+import org.eclipse.tractusx.dft.enums.Type;
+import org.eclipse.tractusx.dft.enums.UsagePolicyEnum;
+import org.eclipse.tractusx.dft.facilitator.ContractNegotiateManagement;
+import org.eclipse.tractusx.dft.gateways.database.ContractNegotiationInfoRepository;
+import org.eclipse.tractusx.dft.model.contractnegotiation.ContractAgreementResponse;
+import org.eclipse.tractusx.dft.model.contractnegotiation.ContractNegotiationDto;
+import org.eclipse.tractusx.dft.model.contractoffers.ContractOffersCatalogResponse;
+import org.eclipse.tractusx.dft.model.request.ConsumerRequest;
+import org.eclipse.tractusx.dft.model.request.OfferRequest;
+import org.eclipse.tractusx.dft.service.ConsumerControlPanelService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

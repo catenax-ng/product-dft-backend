@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -27,9 +27,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import com.catenax.dft.entities.UsagePolicy;
-import com.catenax.dft.enums.PolicyAccessEnum;
-import com.catenax.dft.enums.UsagePolicyEnum;
+import org.eclipse.tractusx.dft.controllers.BatchController;
+import org.eclipse.tractusx.dft.entities.SubmodelJsonRequest;
+import org.eclipse.tractusx.dft.entities.UsagePolicy;
+import org.eclipse.tractusx.dft.entities.aspect.LocalIdentifier;
+import org.eclipse.tractusx.dft.entities.aspect.ManufacturingInformation;
+import org.eclipse.tractusx.dft.entities.aspect.PartTypeInformation;
+import org.eclipse.tractusx.dft.entities.batch.BatchRequest;
+import org.eclipse.tractusx.dft.entities.batch.BatchResponse;
+import org.eclipse.tractusx.dft.enums.PolicyAccessEnum;
+import org.eclipse.tractusx.dft.enums.UsagePolicyEnum;
+import org.eclipse.tractusx.dft.usecases.batchs.GetBatchsUseCase;
+import org.eclipse.tractusx.dft.usecases.csvhandler.batchs.CreateBatchsUseCase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -37,14 +46,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
-import com.catenax.dft.entities.SubmodelJsonRequest;
-import com.catenax.dft.entities.aspect.LocalIdentifier;
-import com.catenax.dft.entities.aspect.ManufacturingInformation;
-import com.catenax.dft.entities.aspect.PartTypeInformation;
-import com.catenax.dft.entities.batch.BatchRequest;
-import com.catenax.dft.entities.batch.BatchResponse;
-import com.catenax.dft.usecases.batchs.GetBatchsUseCase;
-import com.catenax.dft.usecases.csvhandler.batchs.CreateBatchsUseCase;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 

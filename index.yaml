@@ -2,6 +2,22 @@ apiVersion: v1
 entries:
   dft-backend:
   - apiVersion: v2
+    appVersion: 1.6.0
+    created: "2022-10-12T10:17:41.082836692Z"
+    dependencies:
+    - alias: postgres
+      condition: postgres.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.x.x
+    description: A Helm chart for DFT application
+    digest: c3bb9a5cad40a18a30235099432df5d0fd7b572413db662e40c4bb5fd743131f
+    name: dft-backend
+    type: application
+    urls:
+    - https://github.com/catenax-ng/product-dft-backend/releases/download/dft-backend-1.6.0/dft-backend-1.6.0.tgz
+    version: 1.6.0
+  - apiVersion: v2
     appVersion: 1.5.0
     created: "2022-10-11T08:21:20.960161794Z"
     dependencies:
@@ -115,4 +131,4 @@ entries:
     urls:
     - https://github.com/catenax-ng/product-dft-backend/releases/download/helm-1.0.0/helm-1.0.0.tgz
     version: 1.0.0
-generated: "2022-10-11T08:21:20.960190595Z"
+generated: "2022-10-12T10:17:41.082877192Z"

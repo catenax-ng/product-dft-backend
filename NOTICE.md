@@ -14,7 +14,7 @@ SPDX-License-Identifier: Apache-2.0
 
 The project maintains the following source code repositoriy:
 
-* https://github.com/catenax-ng/product-dft-backend
+* https://github.com/eclipse-tractusx/dft-backend
 
 ## Third-party Content (Overarching All Modules)
 

@@ -1,0 +1,861 @@
+openapi: 3.0.1
+info:
+  title: DFT/SDE API information
+  description: This Service handles all DFT data provider and consumer operations
+  version: '1.0'
+servers:
+  - url: http://localhost:8081/api
+    description: Generated server url
+security:
+  - Authentication: []
+paths:
+  /upload:
+    post:
+      tags:
+        - upload-file-controller
+      operationId: fileUpload
+      parameters:
+        - name: meta_data
+          in: query
+          required: true
+          schema:
+            type: string
+            example: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  example: null
+              example: null
+            example: null
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: null
+              example: null
+  /subscribe-data-offers:
+    post:
+      tags:
+        - consumer-controller
+      operationId: subscribeDataOffers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsumerRequest'
+            example: null
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                example: null
+              example: null
+  /connectors-discovery:
+    post:
+      tags:
+        - consumer-controller
+      operationId: fetchConnectorInfo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              example: null
+              items:
+                type: string
+                example: null
+            example: null
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                example: null
+                items:
+                  $ref: '#/components/schemas/ConnectorInfo'
+              example: null
+  /batch:
+    post:
+      tags:
+        - batch-controller
+      operationId: createAspectBatch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmodelJsonRequestBatchRequest'
+            example: null
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: null
+              example: null
+  /aspect:
+    post:
+      tags:
+        - aspect-controller
+      operationId: createAspect
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmodelJsonRequestAspectRequest'
+            example: null
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: null
+              example: null
+  /aspect/relationship:
+    post:
+      tags:
+        - aspect-controller
+      operationId: createAspectRelationship
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: >-
+                #/components/schemas/SubmodelJsonRequestAspectRelationshipRequest
+            example: null
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: null
+              example: null
+  /query-data-offers:
+    get:
+      tags:
+        - consumer-controller
+      operationId: queryOnDataOffers
+      parameters:
+        - name: providerUrl
+          in: query
+          required: true
+          schema:
+            type: string
+            example: null
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                example: null
+              example: null
+  /processing-report:
+    get:
+      tags:
+        - process-report-controller
+      operationId: getProcessingReportsByDateDesc
+      parameters:
+        - name: page
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: null
+        - name: pageSize
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: null
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessReportPageResponse'
+              example: null
+  /processing-report/{id}:
+    get:
+      tags:
+        - process-report-controller
+      operationId: getProcessReportById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: null
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcessReport'
+              example: null
+  /ping:
+    get:
+      tags:
+        - ping-controller
+      operationId: getProcessReportById_1
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: null
+              example: null
+  /legal-entities:
+    get:
+      tags:
+        - consumer-controller
+      operationId: fetchLegalEntitiesData
+      parameters:
+        - name: searchText
+          in: query
+          required: true
+          schema:
+            type: string
+            example: null
+        - name: page
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: null
+        - name: size
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+            example: null
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                example: null
+                items:
+                  $ref: '#/components/schemas/LegalEntityResponse'
+              example: null
+  /contract-offers:
+    get:
+      tags:
+        - consumer-controller
+      operationId: queryOnDataOffersStatus
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            example: null
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            example: null
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                example: null
+              example: null
+  /batch/public/{id}:
+    get:
+      tags:
+        - batch-controller
+      operationId: getBatch
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: null
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchResponse'
+              example: null
+  /aspect/public/{id}:
+    get:
+      tags:
+        - aspect-controller
+      operationId: getAspect
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: null
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AspectResponse'
+              example: null
+  /aspect/public/{id}/relationship:
+    get:
+      tags:
+        - aspect-controller
+      operationId: getAspectRelationships
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: null
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AspectRelationshipResponse'
+              example: null
+components:
+  schemas:
+    ConsumerRequest:
+      required:
+        - connectorId
+        - offers
+        - policies
+        - providerUrl
+      type: object
+      properties:
+        connectorId:
+          type: string
+          example: null
+        providerUrl:
+          type: string
+          example: null
+        offers:
+          type: array
+          example: null
+          items:
+            $ref: '#/components/schemas/OfferRequest'
+        policies:
+          type: array
+          example: null
+          items:
+            $ref: '#/components/schemas/UsagePolicy'
+      example: null
+    OfferRequest:
+      required:
+        - assetId
+        - offerId
+      type: object
+      properties:
+        offerId:
+          type: string
+          example: null
+        assetId:
+          type: string
+          example: null
+        policyId:
+          type: string
+          example: null
+      example: null
+    UsagePolicy:
+      type: object
+      properties:
+        type:
+          type: string
+          example: null
+          enum:
+            - DURATION
+            - PURPOSE
+            - ROLE
+            - CUSTOM
+        typeOfAccess:
+          type: string
+          example: null
+          enum:
+            - RESTRICTED
+            - UNRESTRICTED
+        value:
+          type: string
+          example: null
+        durationUnit:
+          type: string
+          example: null
+          enum:
+            - YEAR
+            - MONTH
+            - DAY
+            - HOUR
+            - MINUTE
+            - SECOND
+      example: null
+    ConnectorInfo:
+      type: object
+      properties:
+        bpn:
+          type: string
+          example: null
+        connectorEndpoint:
+          type: array
+          example: null
+          items:
+            type: string
+            example: null
+      example: null
+    BatchRequest:
+      type: object
+      properties:
+        uuid:
+          type: string
+          example: null
+        classification:
+          type: string
+          example: null
+        batch_id:
+          type: string
+          example: null
+        manufacturing_date:
+          type: string
+          example: null
+        manufacturing_country:
+          type: string
+          example: null
+        manufacturer_part_id:
+          type: string
+          example: null
+        customer_part_id:
+          type: string
+          example: null
+        name_at_manufacturer:
+          type: string
+          example: null
+        name_at_customer:
+          type: string
+          example: null
+        optional_identifier_key:
+          type: string
+          example: null
+        optional_identifier_value:
+          type: string
+          example: null
+      example: null
+    SubmodelJsonRequestBatchRequest:
+      type: object
+      properties:
+        row_data:
+          type: array
+          example: null
+          items:
+            $ref: '#/components/schemas/BatchRequest'
+        type_of_access:
+          type: string
+          example: null
+        bpn_numbers:
+          type: array
+          example: null
+          items:
+            type: string
+            example: null
+        usage_policy:
+          type: array
+          example: null
+          items:
+            $ref: '#/components/schemas/UsagePolicy'
+      example: null
+    AspectRequest:
+      type: object
+      properties:
+        uuid:
+          type: string
+          example: null
+        classification:
+          type: string
+          example: null
+        part_instance_id:
+          type: string
+          example: null
+        manufacturing_date:
+          type: string
+          example: null
+        manufacturing_country:
+          type: string
+          example: null
+        manufacturer_part_id:
+          type: string
+          example: null
+        customer_part_id:
+          type: string
+          example: null
+        name_at_manufacturer:
+          type: string
+          example: null
+        name_at_customer:
+          type: string
+          example: null
+        optional_identifier_key:
+          type: string
+          example: null
+        optional_identifier_value:
+          type: string
+          example: null
+      example: null
+    SubmodelJsonRequestAspectRequest:
+      type: object
+      properties:
+        row_data:
+          type: array
+          example: null
+          items:
+            $ref: '#/components/schemas/AspectRequest'
+        type_of_access:
+          type: string
+          example: null
+        bpn_numbers:
+          type: array
+          example: null
+          items:
+            type: string
+            example: null
+        usage_policy:
+          type: array
+          example: null
+          items:
+            $ref: '#/components/schemas/UsagePolicy'
+      example: null
+    AspectRelationshipRequest:
+      type: object
+      properties:
+        uuid:
+          type: string
+          example: null
+        parent_uuid:
+          type: string
+          example: null
+        parent_part_instance_id:
+          type: string
+          example: null
+        parent_manufacturer_part_id:
+          type: string
+          example: null
+        parent_optional_identifier_key:
+          type: string
+          example: null
+        parent_optional_identifier_value:
+          type: string
+          example: null
+        part_instance_id:
+          type: string
+          example: null
+        manufacturer_part_id:
+          type: string
+          example: null
+        optional_identifier_key:
+          type: string
+          example: null
+        optional_identifier_value:
+          type: string
+          example: null
+        lifecycle_context:
+          type: string
+          example: null
+        quantity_number:
+          type: string
+          example: null
+        measurement_unit_lexical_value:
+          type: string
+          example: null
+        datatype_uri:
+          type: string
+          example: null
+        assembled_on:
+          type: string
+          example: null
+      example: null
+    SubmodelJsonRequestAspectRelationshipRequest:
+      type: object
+      properties:
+        row_data:
+          type: array
+          example: null
+          items:
+            $ref: '#/components/schemas/AspectRelationshipRequest'
+        type_of_access:
+          type: string
+          example: null
+        bpn_numbers:
+          type: array
+          example: null
+          items:
+            type: string
+            example: null
+        usage_policy:
+          type: array
+          example: null
+          items:
+            $ref: '#/components/schemas/UsagePolicy'
+      example: null
+    ProcessReport:
+      type: object
+      properties:
+        processId:
+          type: string
+          example: null
+        csvType:
+          type: string
+          example: null
+          enum:
+            - ASPECT
+            - BATCH
+            - ASPECT_RELATIONSHIP
+            - UNKNOWN
+        numberOfItems:
+          type: integer
+          format: int32
+          example: null
+        numberOfFailedItems:
+          type: integer
+          format: int32
+          example: null
+        numberOfSucceededItems:
+          type: integer
+          format: int32
+          example: null
+        status:
+          type: string
+          example: null
+          enum:
+            - IN_PROGRESS
+            - COMPLETED
+            - FAILED
+        startDate:
+          type: string
+          format: date-time
+          example: null
+        endDate:
+          type: string
+          format: date-time
+          example: null
+        bpnNumbers:
+          type: array
+          example: null
+          items:
+            type: string
+            example: null
+        typeOfAccess:
+          type: string
+          example: null
+        usagePolicies:
+          type: string
+          example: null
+      example: null
+    ProcessReportPageResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+          example: null
+        pageSize:
+          type: integer
+          format: int32
+          example: null
+        totalItems:
+          type: integer
+          format: int64
+          example: null
+        items:
+          type: array
+          example: null
+          items:
+            $ref: '#/components/schemas/ProcessReport'
+      example: null
+    LegalEntityResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          example: null
+        bpn:
+          type: string
+          example: null
+      example: null
+    BatchResponse:
+      type: object
+      properties:
+        localIdentifiers:
+          type: array
+          example: null
+          items:
+            $ref: '#/components/schemas/LocalIdentifier'
+        manufacturingInformation:
+          $ref: '#/components/schemas/ManufacturingInformation'
+        catenaXId:
+          type: string
+          example: null
+        partTypeInformation:
+          $ref: '#/components/schemas/PartTypeInformation'
+      example: null
+    LocalIdentifier:
+      type: object
+      properties:
+        key:
+          type: string
+          example: null
+        value:
+          type: string
+          example: null
+      example: null
+    ManufacturingInformation:
+      type: object
+      properties:
+        date:
+          type: string
+          example: null
+        country:
+          type: string
+          example: null
+      example: null
+    PartTypeInformation:
+      type: object
+      properties:
+        manufacturerPartID:
+          type: string
+          example: null
+        customerPartId:
+          type: string
+          example: null
+        classification:
+          type: string
+          example: null
+        nameAtManufacturer:
+          type: string
+          example: null
+        nameAtCustomer:
+          type: string
+          example: null
+      example: null
+    AspectResponse:
+      type: object
+      properties:
+        localIdentifiers:
+          type: array
+          example: null
+          items:
+            $ref: '#/components/schemas/LocalIdentifier'
+        manufacturingInformation:
+          $ref: '#/components/schemas/ManufacturingInformation'
+        catenaXId:
+          type: string
+          example: null
+        partTypeInformation:
+          $ref: '#/components/schemas/PartTypeInformation'
+      example: null
+    AspectRelationshipResponse:
+      type: object
+      properties:
+        catenaXId:
+          type: string
+          example: null
+        childParts:
+          type: array
+          example: null
+          items:
+            $ref: '#/components/schemas/ChildPart'
+      example: null
+    ChildPart:
+      type: object
+      properties:
+        lifecycleContext:
+          type: string
+          example: null
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+        assembledOn:
+          type: string
+          example: null
+        lastModifiedOn:
+          type: string
+          example: null
+        childCatenaXId:
+          type: string
+          example: null
+      example: null
+    MeasurementUnit:
+      type: object
+      properties:
+        lexicalValue:
+          type: string
+          example: null
+        datatypeURI:
+          type: string
+          example: null
+      example: null
+    Quantity:
+      type: object
+      properties:
+        quantityNumber:
+          type: number
+          format: double
+          example: null
+        measurementUnit:
+          $ref: '#/components/schemas/MeasurementUnit'
+      example: null
+  securitySchemes:
+    Authentication:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: >-
+            https://centralidp.dev.demo.catena-x.net/auth/realms/CX-Central/protocol/openid-connect/auth
+          tokenUrl: >-
+            https://centralidp.dev.demo.catena-x.net/auth/realms/CX-Central/protocol/openid-connect/token

@@ -859,3 +859,7 @@ components:
             https://centralidp.dev.demo.catena-x.net/auth/realms/CX-Central/protocol/openid-connect/auth
           tokenUrl: >-
             https://centralidp.dev.demo.catena-x.net/auth/realms/CX-Central/protocol/openid-connect/token
+          scopes:
+            read: Grants read access
+            write: Grants write access
+            admin: Grants access to admin operations

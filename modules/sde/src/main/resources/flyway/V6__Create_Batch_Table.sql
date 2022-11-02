@@ -33,10 +33,5 @@ CREATE TABLE batch
     name_at_customer          VARCHAR(50),
     optional_identifier_key   VARCHAR(50),
     optional_identifier_value VARCHAR(50),
-    shell_id                  VARCHAR(50),
-    asset_id                  VARCHAR(50),
-    usage_policy_id           VARCHAR(50),
-    access_policy_id          VARCHAR(50),
-    contract_defination_id    VARCHAR(50)
-
+    shell_id                  VARCHAR(50)
 );

@@ -33,7 +33,7 @@ import com.catenax.sde.edc.entities.request.policies.PolicyRequestFactory;
 import com.catenax.sde.edc.enums.UsagePolicyEnum;
 import com.catenax.sde.edc.gateways.external.EDCGateway;
 import com.catenax.sde.entities.usecases.Aspect;
-import com.catenax.sde.entities.aspect.EdcCommonResponse;
+import com.catenax.sde.edc.model.response.EdcCommonResponse;
 import com.catenax.sde.usecases.csvhandler.AbstractCsvHandlerUseCase;
 import com.catenax.sde.usecases.csvhandler.exceptions.CsvHandlerUseCaseException;
 

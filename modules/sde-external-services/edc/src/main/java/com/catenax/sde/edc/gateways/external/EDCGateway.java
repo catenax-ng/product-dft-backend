@@ -32,8 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
-import com.catenax.dft.entities.aspect.EdcCommonResponse;
+import com.catenax.sde.edc.model.response.EdcCommonResponse;
 import com.catenax.sde.edc.entities.request.asset.AssetEntryRequest;
 import com.catenax.sde.edc.entities.request.contractdefinition.ContractDefinitionRequest;
 import com.catenax.sde.edc.entities.request.policies.PolicyDefinitionRequest;

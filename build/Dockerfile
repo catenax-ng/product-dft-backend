@@ -46,4 +46,5 @@ RUN chown ${UID}:${GID} /dft
 USER ${UID}:${GID}
 
 # set the startup command to run your binary
-CMD ["java", "-jar", "./app.jar"]
+#CMD ["java", "-jar", "./app.jar"]
+CMD ["java", "-jar", "./app.jar","--spring.config.location=file:/app/configuration.properties"]

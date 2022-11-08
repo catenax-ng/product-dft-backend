@@ -13,12 +13,12 @@
 # limitations under the License.
 
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: build
+name: build-autosetup
 
 on:
   push:
     branches:
-      - 'main'
+      - 'autosetup-dft'
     tags:
       - v1.*
 
@@ -57,7 +57,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}//catenax-ng/product-autosetup-dft
           tags: |
             type=semver,pattern={{version}},value=v1.7.0
           flavor: |

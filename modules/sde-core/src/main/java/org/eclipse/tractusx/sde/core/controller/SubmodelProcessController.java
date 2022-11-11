@@ -11,7 +11,6 @@ import javax.validation.Valid;
 import org.eclipse.tractusx.sde.common.entities.SubmodelFileRequest;
 import org.eclipse.tractusx.sde.common.entities.SubmodelJsonRequest;
 import org.eclipse.tractusx.sde.common.entities.csv.CsvContent;
-import org.eclipse.tractusx.sde.common.exception.ServiceException;
 import org.eclipse.tractusx.sde.common.validators.UsagePolicyValidation;
 import org.eclipse.tractusx.sde.core.csv.service.CsvHandlerService;
 import org.eclipse.tractusx.sde.core.service.SubmodelOrchestartorService;
@@ -43,7 +42,7 @@ public class SubmodelProcessController {
 
 	private ObjectMapper objectMapper = new ObjectMapper();
 
-	@PostMapping(value = "/submodels/{submodel}/upload")
+	@PostMapping(value = "/{submodel}/upload")
 	public ResponseEntity<String> fileUpload(@PathVariable("submodel") String submodel,
 			@RequestParam("file") MultipartFile file, @UsagePolicyValidation @RequestParam("meta_data") String metaData)
 			throws JsonProcessingException {
@@ -58,31 +57,25 @@ public class SubmodelProcessController {
 		return ok().body(processId);
 	}
 
-	@PostMapping(value = "/submodels/{submodel}", consumes = APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/{submodel}", consumes = APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> createSubmodelAssets(@PathVariable("submodel") String submodel,
 			@RequestBody @Valid SubmodelJsonRequest<ObjectNode> submodelJsonRequest) {
 
 		String processId = UUID.randomUUID().toString();
-		Runnable runnable = () -> {
-			try {
-				submodelOrchestartorService.processSubmodel(submodelJsonRequest, processId, submodel);
-			} catch (ServiceException e) {
-				throw new ServiceException(e.getMessage());
-			}
-		};
-		new Thread(runnable).start();
+		
+		submodelOrchestartorService.processSubmodel(submodelJsonRequest, processId, submodel);
 
 		return ok().body(processId);
 	}
 
-	@GetMapping(value = "/submodels/{submodel}/public/{uuid}", consumes = APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/{submodel}/public/{uuid}", consumes = APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<Object, Object>> readCreatedTwinsDetails(@PathVariable("submodel") String submodel,
 			@PathVariable("uuid") String uuid) {
 		
 		return ok().body(submodelOrchestartorService.readCreatedTwinsDetails(submodel, uuid));
 	}
 
-	@DeleteMapping(value = "/submodels/{submodel}/{processId}", produces = APPLICATION_JSON_VALUE)
+	@DeleteMapping(value = "/{submodel}/{processId}", produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> deleteRecordsWithDigitalTwinAndEDC(@PathVariable("processId") String processId,
 			@PathVariable("submodel") String submodel) {
 		String delProcessId = UUID.randomUUID().toString();

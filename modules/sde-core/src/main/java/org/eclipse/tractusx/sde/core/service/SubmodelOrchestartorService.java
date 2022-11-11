@@ -139,7 +139,7 @@ public class SubmodelOrchestartorService {
 					failureCount.incrementAndGet();
 				}
 			});
-			processReportUseCase.finishBuildProgressReport(delProcessId, deletedCount.get(), failureCount.get());
+			processReportUseCase.finishBuildDeleteProgressReport(delProcessId, deletedCount.get(), failureCount.get());
 		};
 		new Thread(runnable).start();
 

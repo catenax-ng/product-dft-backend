@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.tractusx.sde.common.exception.NoDataFoundException;
+import org.eclipse.tractusx.sde.common.exception.ValidationException;
 import org.eclipse.tractusx.sde.common.mapper.SubmodelMapper;
 import org.eclipse.tractusx.sde.common.model.Submodel;
 import org.eclipse.tractusx.sde.core.registry.SubmodelRegistration;
@@ -47,7 +48,7 @@ public class SubmodelService {
 	}
 
 	public Submodel findSubmodelByNameAsSubmdelObject(String submodelName) {
-		return readValue(submodelName).orElseThrow(() -> new NoDataFoundException("No data found for " + submodelName));
+		return readValue(submodelName).orElseThrow(() -> new ValidationException(submodelName+" submodel is not supported"));
 	}
 
 }

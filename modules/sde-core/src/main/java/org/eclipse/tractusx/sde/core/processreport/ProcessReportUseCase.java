@@ -98,9 +98,15 @@ public class ProcessReportUseCase {
 		return result.map(mapper::mapFrom).orElse(null);
 	}
 
-	public void finishBuildProgressReport(String processId, int successCount, int failedCount) {
+	public void finishBuildProgressReport(String processId, int deletedCount, int failedCount) {
 		repository.finalizeProgressReport(processId, LocalDateTime.now(), ProgressStatusEnum.COMPLETED.toString(),
-				successCount, failedCount);
+				deletedCount, failedCount);
+
+	}
+	
+	public void finishBuildDeleteProgressReport(String processId, int deletedCount, int failedCount) {
+		repository.finalizeProgressDeleteReport(processId, LocalDateTime.now(), ProgressStatusEnum.COMPLETED.toString(),
+				deletedCount, failedCount);
 
 	}
 }

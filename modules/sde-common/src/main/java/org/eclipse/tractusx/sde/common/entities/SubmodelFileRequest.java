@@ -42,7 +42,7 @@ public class SubmodelFileRequest {
 	@SerializedName(value = "bpn_numbers")
 	private List<String> bpnNumbers;
 
-	@JsonProperty(value = "usage_policies")
+	@JsonProperty(value = "usage_policy")
 	@SerializedName(value = "usage_policies")
 	private List<UsagePolicy> usagePolicies;
 }

@@ -42,10 +42,22 @@ public interface ProcessReportRepository extends JpaRepository<ProcessReportEnti
     @Query(value = "UPDATE process_report " +
             "SET end_date = ?2, " +
             "status = ?3, " +
+            "number_of_deleted_items =?4, " +
+            "number_of_failed_items = ?5 " +
+            "WHERE process_id = ?1", nativeQuery = true)
+	void finalizeProgressDeleteReport(String processId, LocalDateTime endDate, String status, int deletedCount,
+			int noOfFailed);
+    
+    
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE process_report " +
+            "SET end_date = ?2, " +
+            "status = ?3, " +
             "number_of_succeeded_items =?4, " +
             "number_of_failed_items = ?5 " +
             "WHERE process_id = ?1", nativeQuery = true)
-	void finalizeProgressReport(String processId, LocalDateTime endDate, String status, int noOfSuccess,
+	void finalizeProgressReport(String processId, LocalDateTime endDate, String status, int deletedCount,
 			int noOfFailed);
 
 

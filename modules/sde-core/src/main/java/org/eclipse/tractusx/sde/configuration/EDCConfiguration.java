@@ -1,4 +1,5 @@
 /********************************************************************************
+
  * Copyright (c) 2022 T-Systems International GmbH
  * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
@@ -18,32 +19,27 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-package org.eclipse.tractusx.sde.common.entities;
+package org.eclipse.tractusx.sde.configuration;
 
-import java.util.List;
+import feign.RequestInterceptor;
+import feign.RequestTemplate;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.annotations.SerializedName;
+@Configuration
+public class EDCConfiguration {
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+	@Bean
+	public EDCRequestInterceptor edcRequestInterceptor() {
+		return new EDCRequestInterceptor();
+	}
+}
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class SubmodelFileRequest {
+class EDCRequestInterceptor implements RequestInterceptor {
 
-	@JsonProperty(value = "type_of_access")
-	@SerializedName(value = "type_of_access")
-	private String typeOfAccess;
-	
-	@JsonProperty(value = "bpn_numbers")
-	@SerializedName(value = "bpn_numbers")
-	private List<String> bpnNumbers;
+	@Override
+	public void apply(RequestTemplate template) {
+		// TODO document why this method is empty
+	}
 
-
-	@JsonProperty(value = "usage_policy")
-	@SerializedName(value = "usage_policies")
-	private List<UsagePolicy> usagePolicies;
 }

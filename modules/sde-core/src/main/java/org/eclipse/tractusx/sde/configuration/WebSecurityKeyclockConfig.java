@@ -51,7 +51,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @Import(KeycloakSpringBootConfigResolver.class)
 public class WebSecurityKeyclockConfig extends KeycloakWebSecurityConfigurerAdapter {
 
-	private static final String[] PUBLIC_URL = {"/ping","/*/public/**"};
+	private static final String[] PUBLIC_URL = {"/ping","/*/public/**", "/api-docs/**","/swagger-ui/**"};
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -62,7 +62,9 @@ public class WebSecurityKeyclockConfig extends KeycloakWebSecurityConfigurerAdap
 		.and().headers().frameOptions().sameOrigin()
 		.and().authorizeRequests().antMatchers(PUBLIC_URL).permitAll()
 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and().addFilterAfter(customAuthFilter(),BasicAuthenticationFilter.class).authorizeRequests().anyRequest().authenticated();
+		.and().addFilterAfter(customAuthFilter(),BasicAuthenticationFilter.class).authorizeRequests().anyRequest().authenticated()
+ 		.and().headers().xssProtection()
+ 		.and().contentSecurityPolicy("script-src 'self'");
 
 	}
 	

@@ -30,19 +30,19 @@ securityContext:
 
 probe:
   endpoint: "/api/ping"
-    
+
 service:
   type: ClusterIP
   port: 8080
 
-securityContext: 
-   capabilities:
-     drop:
+securityContext:
+  capabilities:
+    drop:
       - ALL
-   readOnlyRootFilesystem: true
-   runAsNonRoot: true
-   runAsUser: 1000
-   allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  allowPrivilegeEscalation: false
 
 
 autoscaling:
@@ -86,7 +86,7 @@ ingress:
     nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
     nginx.ingress.kubernetes.io/enable-cors: 'false'
 
- 
+
 dftpostgresql:
   enabled: true
   auth:
@@ -94,9 +94,9 @@ dftpostgresql:
     database: "dftdb"
     existingSecret: dft-postgresql-secrets
     secretKeys:
-        adminPasswordKey: "postgres-password"
-        userPasswordKey: "password"
- 
+      adminPasswordKey: "postgres-password"
+      userPasswordKey: "password"
+
 edcpostgresql:
   enabled: true
   auth:
@@ -104,31 +104,31 @@ edcpostgresql:
     database: "edcdb"
     existingSecret: dft-postgresql-secrets
     secretKeys:
-        adminPasswordKey: "postgres-password"
-        userPasswordKey: "password"
-		
+      adminPasswordKey: "postgres-password"
+      userPasswordKey: "password"
+
 edccontrolplane:
   enabled: true
   ingress:
-	enabled: true
-	hostname: ""
-	    # -- Additional ingress annotations to add
-	annotations: {}
-	    # -- EDC endpoints exposed by this ingress resource
-	endpoints:
-	- ids
-	- default
-	- data
-	- control
-	    # -- Defines the [ingress class](https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-class)  to use
-	className: "nginx"
-	certManager:
-	      # -- If preset enables certificate generation via cert-manager namespace scoped issuer
-	  issuer: ""
-	      # -- If preset enables certificate generation via cert-manager cluster-wide issuer
-	  clusterIssuer: "letsencrypt-prod"
+  enabled: true
+  hostname: ""
+  # -- Additional ingress annotations to add
+  annotations: {}
+  # -- EDC endpoints exposed by this ingress resource
+  endpoints:
+    - ids
+    - default
+    - data
+    - control
+    # -- Defines the [ingress class](https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-class)  to use
+  className: "nginx"
+  certManager:
+    # -- If preset enables certificate generation via cert-manager namespace scoped issuer
+    issuer: ""
+    # -- If preset enables certificate generation via cert-manager cluster-wide issuer
+    clusterIssuer: "letsencrypt-prod"
   configuration:
-    # -- EDC configuration.properties configuring aspects of the [eclipse-dataspaceconnector](https://github.com/eclipse-dataspaceconnector/DataSpaceConnector)
+      # -- EDC configuration.properties configuring aspects of the [eclipse-dataspaceconnector](https://github.com/eclipse-dataspaceconnector/DataSpaceConnector)
     properties: |-
       edc.receiver.http.endpoint=
       edc.ids.title=Eclipse Dataspace Connector
@@ -188,33 +188,36 @@ edccontrolplane:
       edc.datasource.transferprocess.url=
       edc.datasource.transferprocess.user=
       edc.datasource.transferprocess.password=
-edccontrolplane:
+edcdataplane:
   enabled: true
   ingress:
-	enabled: true
-	hostname: ""
-	    # -- Additional ingress annotations to add
-	annotations: {}
-	    # -- EDC endpoints exposed by this ingress resource
-	endpoints:
-	- ids
-	- default
-	- data
-	- control
-	    # -- Defines the [ingress class](https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-class)  to use
-	className: "nginx"
-	certManager:
-	      # -- If preset enables certificate generation via cert-manager namespace scoped issuer
-	  issuer: ""
-	      # -- If preset enables certificate generation via cert-manager cluster-wide issuer
-	  clusterIssuer: "letsencrypt-prod"
+  enabled: true
+  hostname: ""
+  # -- Additional ingress annotations to add
+  annotations: {}
+  # -- EDC endpoints exposed by this ingress resource
+  endpoints:
+    - ids
+    - default
+    - data
+    - control
+    # -- Defines the [ingress class](https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-class)  to use
+  className: "nginx"
+  certManager:
+    # -- If preset enables certificate generation via cert-manager namespace scoped issuer
+    issuer: ""
+    # -- If preset enables certificate generation via cert-manager cluster-wide issuer
+    clusterIssuer: "letsencrypt-prod"
   configuration:
-	properties: |-
-	  edc.dataplane.token.validation.endpoint=
-	  edc.hostname=
-	  edc.vault.clientid=
-	  edc.vault.tenantid=
-	  edc.vault.name=
-	  edc.vault.clientsecret=
+    properties: |-
+      edc.dataplane.token.validation.endpoint=
+      edc.hostname=
+      edc.vault.clientid=
+      edc.vault.tenantid=
+      edc.vault.name=
+      edc.vault.clientsecret=
  
   
+
+  
+

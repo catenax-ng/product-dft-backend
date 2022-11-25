@@ -77,7 +77,7 @@ spec:
                   name: dtf-digitaltwins-secrets
                   key: digitalTwinAuthorizationClientSecret
             - name: EDC_ENABLED
-              value: 'true'
+              value: 'false'
             - name: EDC_HOSTNAME
               valueFrom:
                 secretKeyRef:

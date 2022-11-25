@@ -276,8 +276,8 @@ configuration:
     edc.oauth.provider.audience=idsc:IDS_CONNECTORS_ALL
     edc.oauth.provider.jwks.url=https://daps.beta.demo.catena-x.net/.well-known/jwks.json
     # OAUTH Properties
-    edc.oauth.public.key.alias=dft-daps-key
-    edc.oauth.private.key.alias=dft-private-key
+    edc.oauth.public.key.alias=sde-beta
+    edc.oauth.private.key.alias=sde-beta-private
     # Azure vault related configuration
     edc.vault.clientid=2f0e6b4e-de1a-42bd-b30e-453d558d2dd4
     edc.vault.tenantid=495463c3-0991-4659-9cc5-94b4a3f7b1d6

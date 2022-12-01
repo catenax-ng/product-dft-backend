@@ -57,7 +57,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/catenax-ng/product-dft-backend-autosetup
+          images: ${{ env.REGISTRY }}/catenax-ng/product-dft-backend-autosetup-dev-norestrict
           #tags: |
             #type=semver,pattern={{version}},value=v1.7.0
           flavor: |

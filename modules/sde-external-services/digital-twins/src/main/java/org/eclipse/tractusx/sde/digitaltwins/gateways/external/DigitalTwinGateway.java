@@ -152,18 +152,36 @@ public class DigitalTwinGateway {
         return responseBody;
     }
 
-    public void createSubModel(String shellId, CreateSubModelRequest request) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(AUTHORIZATION, getBearerToken());
-        HttpEntity<CreateSubModelRequest> entity = new HttpEntity<>(request, headers);
-        String url = digitalTwinsHost + "/registry/shell-descriptors/" + shellId + "/submodel-descriptors";
-        ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
+	public void createSubModel(String shellId, CreateSubModelRequest request) {
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(AUTHORIZATION, getBearerToken());
+		HttpEntity<CreateSubModelRequest> entity = new HttpEntity<>(request, headers);
+		if (!validateShellId(shellId).isBlank()) {
+			String url = digitalTwinsHost + "/registry/shell-descriptors/" + shellId
+					+ "/submodel-descriptors";
+			ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
 
-        if (response.getStatusCode() != HttpStatus.CREATED) {
-            log.error("Unable to create shell descriptor");
-        }
-    }
+			if (response.getStatusCode() != HttpStatus.CREATED) {
+				log.error("Unable to create shell descriptor");
+			}
+		}
+	}
+    
+	//IMP NOTE: This Method is temporary written for validating purpose, once completed with code dev then will remove/shift to class.
+	private String validateShellId(String data) {
+
+		try {
+			if (!data.contains("urn:uuid:")) {
+				data = "";
+				throw new Exception("Invalid Data ");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
 
     public SubModelListResponse getSubModels(String shellId) {
         RestTemplate restTemplate = new RestTemplate();

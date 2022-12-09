@@ -28,6 +28,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.eclipse.tractusx.sde.common.utils.LogUtil;
 import org.eclipse.tractusx.sde.edc.model.contractnegotiation.ContractAgreementResponse;
 import org.eclipse.tractusx.sde.edc.model.request.ConsumerRequest;
 import org.eclipse.tractusx.sde.edc.services.ConsumerControlPanelService;
@@ -92,8 +93,9 @@ public class ConsumerController {
     public ResponseEntity<LegalEntityResponse[]> fetchLegalEntitiesData(@RequestParam String searchText, @RequestParam Integer page, @RequestParam Integer size)
             throws Exception {
         log.info("Request received : /api/legal-entities");
-        return consumerControlPanelService.fetchLegalEntitiesData(searchText, page, size);
+        return consumerControlPanelService.fetchLegalEntitiesData(LogUtil.encode(searchText), page, size);
     }
+    
 
     @PostMapping(value = "/connectors-discovery")
     @PreAuthorize("hasPermission('','consumer_search_connectors')")

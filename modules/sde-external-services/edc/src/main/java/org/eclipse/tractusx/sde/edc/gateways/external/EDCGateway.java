@@ -47,27 +47,40 @@ public class EDCGateway {
     @Value(value = "${edc.apiKey}")
     private String apiKey;
 
-    public boolean assetExistsLookup(String id) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(apiKeyHeader, apiKey);
-        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(headers);
+	public boolean assetExistsLookup(String id) {
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(apiKeyHeader, apiKey);
+		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(headers);
 
-        try {
-            String url = edcHostname + "/assets/"+ id;
-            restTemplate.exchange(
-                    url,
-                    HttpMethod.GET,
-                    entity,
-                    Object.class);
-        } catch (HttpClientErrorException e) {
-            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
-                return false;
-            }
-            throw e;
-        }
-        return true;
-    }
+		try {
+			if (!validateAssetId(id).isBlank()) {
+				String url = edcHostname + "/assets/" + id;
+				restTemplate.exchange(url, HttpMethod.GET, entity, Object.class);
+			}
+		} catch (HttpClientErrorException e) {
+			if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
+				return false;
+			}
+			throw e;
+		}
+		return true;
+	}
+    
+	//IMP NOTE: This Method is temporary written for validating purpose, once completed with code dev then will remove/shift to class.
+	private String validateAssetId(String data) {
+
+		try {
+			if (!data.contains("urn:uuid:")) {
+				data = "";
+				throw new Exception("Invalid Data ");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
 
     public void createAsset(AssetEntryRequest request) {
         RestTemplate restTemplate = new RestTemplate();

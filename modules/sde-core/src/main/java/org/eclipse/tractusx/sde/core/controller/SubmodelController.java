@@ -20,13 +20,18 @@
 
 package org.eclipse.tractusx.sde.core.controller;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.Response;
+
 import org.eclipse.tractusx.sde.core.service.SubmodelService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -46,6 +51,15 @@ public class SubmodelController {
 	@GetMapping("/submodels/{submodelName}")
 	public Map<Object, Object> getSubmodelByName(@PathVariable String submodelName) {
 		return submodelService.findSubmodelByName(submodelName);
+	}
+	
+	@GetMapping(value = "/submodels/{submodelName}/sample")
+	public Response getSubmodelCSV(@PathVariable String submodelName, @RequestParam(value = "type", required = true) String type) {
+		
+		File file  = submodelService.findSubmodelCsv(submodelName,type);
+		
+		return Response.ok(file).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file)
+								.header(HttpHeaders.CONTENT_TYPE, "text/csv").build();
 	}
 
 }

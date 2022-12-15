@@ -6,7 +6,7 @@
 	"idShort": "partAsPlanned",
 	"version": "1.0.0",
 	"semantic_id": "urn:bamm:io.catenax.part_as_planned:1.0.0#PartAsPlanned",
-	"title": "PartAsPlanned",
+	"title": "Part AsPlanned",
 	"description": "BoM As-Planned - Submodel PartAsPlanned",
 	"items": {
 		"type": "object",
@@ -106,8 +106,8 @@
 			"manufacturer_part_id": "37754B7-76",
 			"valid_from": "2021-06-14T06:55:29.935Z",
 			"valid_to": "2022-06-14T06:55:29.935Z",
-			"classification": "component",
 			"customer_part_id": "Currently missing the syntax",
+			"classification": "component",
 			"name_at_manufacturer": "Sensor"
 		}
 	]

@@ -20,12 +20,15 @@
 
 package org.eclipse.tractusx.sde.core.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.tractusx.sde.common.exception.NoDataFoundException;
 import org.eclipse.tractusx.sde.common.exception.ValidationException;
 import org.eclipse.tractusx.sde.common.mapper.SubmodelMapper;
@@ -33,7 +36,16 @@ import org.eclipse.tractusx.sde.common.model.Submodel;
 import org.eclipse.tractusx.sde.core.registry.SubmodelRegistration;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema.Builder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 
 @Service
 @AllArgsConstructor
@@ -58,6 +70,7 @@ public class SubmodelService {
 		return ls;
 	}
 
+	
 	public Map<Object, Object> findSubmodelByName(String submodelName) {
 		return readValue(submodelName).map(e -> submodelMapper.jsonPojoToMap(e.getSchema()))
 				.orElseThrow(() -> new NoDataFoundException("No data found for " + submodelName));
@@ -71,6 +84,45 @@ public class SubmodelService {
 
 	public Submodel findSubmodelByNameAsSubmdelObject(String submodelName) {
 		return readValue(submodelName).orElseThrow(() -> new ValidationException(submodelName+" submodel is not supported"));
+	}
+	
+	@SuppressWarnings("deprecation")
+	@SneakyThrows
+	public File findSubmodelCsv(String submodelName, String type) {
+		
+		File file = new File(submodelName +".csv");
+		String csvString = "";
+		JsonObject schemaObject = findSubmodelByNameAsSubmdelObject(submodelName).getSchema();
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		switch (type.toLowerCase()) {
+		case "sample":
+			
+			JsonArray examplesArray = schemaObject.getAsJsonArray("examples");
+			JsonNode jsonNode = objectMapper.readTree(examplesArray.toString());
+			Builder csvSchemaBuilder = CsvSchema.builder();
+			JsonNode firstObject = jsonNode.elements().next();
+			firstObject.fieldNames().forEachRemaining(csvSchemaBuilder::addColumn);
+			CsvSchema csvSchema = csvSchemaBuilder.build().withHeader().withColumnSeparator(';');
+			CsvMapper csvMapper = new CsvMapper();
+			csvMapper.writerFor(JsonNode.class)
+			  .with(csvSchema)
+			  .writeValue(file, jsonNode);
+			break;
+			
+		case "template":
+			
+			JsonObject asJsonObject = schemaObject.get("items").getAsJsonObject().get("properties").getAsJsonObject();
+			List<String> headerList = asJsonObject.keySet().stream().toList();
+			csvString = StringUtils.join(headerList, ";");
+			FileUtils.writeStringToFile(file, csvString);
+			break;
+			
+		default:
+			throw new ValidationException("Unknown CSV type: " + type + " for submodel: " + submodelName);
+		}
+		
+		return file;
 	}
 
 }

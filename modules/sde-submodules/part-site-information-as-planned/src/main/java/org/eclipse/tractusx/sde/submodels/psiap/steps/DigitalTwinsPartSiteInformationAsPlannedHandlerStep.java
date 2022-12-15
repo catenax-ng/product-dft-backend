@@ -65,15 +65,15 @@ public class DigitalTwinsPartSiteInformationAsPlannedHandlerStep extends Step {
 		}
 	}
 
-	private PartSiteInformationAsPlanned doRun(PartSiteInformationAsPlanned PartSiteInformationAsPlannedAspect) throws CsvHandlerDigitalTwinUseCaseException {
-		ShellLookupRequest shellLookupRequest = getShellLookupRequest(PartSiteInformationAsPlannedAspect);
+	private PartSiteInformationAsPlanned doRun(PartSiteInformationAsPlanned partSiteInformationAsPlannedAspect) throws CsvHandlerDigitalTwinUseCaseException {
+		ShellLookupRequest shellLookupRequest = getShellLookupRequest(partSiteInformationAsPlannedAspect);
 		ShellLookupResponse shellIds = gateway.shellLookup(shellLookupRequest);
 
 		String shellId;
 
 		if (shellIds.isEmpty()) {
 			logDebug(String.format("No shell id for '%s'", shellLookupRequest.toJsonString()));
-			ShellDescriptorRequest aasDescriptorRequest = getShellDescriptorRequest(PartSiteInformationAsPlannedAspect);
+			ShellDescriptorRequest aasDescriptorRequest = getShellDescriptorRequest(partSiteInformationAsPlannedAspect);
 			ShellDescriptorResponse result = gateway.createShellDescriptor(aasDescriptorRequest);
 			shellId = result.getIdentification();
 			logDebug(String.format("Shell created with id '%s'", shellId));
@@ -86,27 +86,27 @@ public class DigitalTwinsPartSiteInformationAsPlannedHandlerStep extends Step {
 					String.format("Multiple ids found on aspect %s", shellLookupRequest.toJsonString()));
 		}
 
-		PartSiteInformationAsPlannedAspect.setShellId(shellId);
+		partSiteInformationAsPlannedAspect.setShellId(shellId);
 		SubModelListResponse subModelResponse = gateway.getSubModels(shellId);
 		SubModelResponse foundSubmodel = null;
 		if (subModelResponse != null) {
 			foundSubmodel = subModelResponse.stream().filter(x -> getIdShortOfModel().equals(x.getIdShort()))
 					.findFirst().orElse(null);
 			if (foundSubmodel != null)
-				PartSiteInformationAsPlannedAspect.setSubModelId(foundSubmodel.getIdentification());
+				partSiteInformationAsPlannedAspect.setSubModelId(foundSubmodel.getIdentification());
 		}
 
 		if (subModelResponse == null || foundSubmodel == null) {
 			logDebug(String.format("No submodels for '%s'", shellId));
-			CreateSubModelRequest createSubModelRequest = getCreateSubModelRequest(PartSiteInformationAsPlannedAspect);
+			CreateSubModelRequest createSubModelRequest = getCreateSubModelRequest(partSiteInformationAsPlannedAspect);
 			gateway.createSubModel(shellId, createSubModelRequest);
-			PartSiteInformationAsPlannedAspect.setSubModelId(createSubModelRequest.getIdentification());
+			partSiteInformationAsPlannedAspect.setSubModelId(createSubModelRequest.getIdentification());
 		} else {
-			PartSiteInformationAsPlannedAspect.setUpdated(CommonConstants.UPDATED_Y);
+			partSiteInformationAsPlannedAspect.setUpdated(CommonConstants.UPDATED_Y);
 			logDebug("Complete Digital Twins Update Update Digital Twins");
 		}
 
-		return PartSiteInformationAsPlannedAspect;
+		return partSiteInformationAsPlannedAspect;
 	}
 
 	private ShellLookupRequest getShellLookupRequest(PartSiteInformationAsPlanned partSiteInformationAsPlannedAspect) {

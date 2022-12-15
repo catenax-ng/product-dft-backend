@@ -36,20 +36,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@JsonIgnoreProperties(ignoreUnknown=true)
-@JsonInclude(Include. NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(Include.NON_NULL)
 public class Submodel {
 
 	private String id;
-	
+
 	private String name;
 
 	private String version;
-	
+
 	private String semanticId;
-	
-	private String usecases;
-	
+
 	private JsonObject schema;
 
 	private SubmodelExecutor executor;

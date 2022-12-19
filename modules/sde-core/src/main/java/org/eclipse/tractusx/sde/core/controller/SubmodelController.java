@@ -52,14 +52,5 @@ public class SubmodelController {
 	public Map<Object, Object> getSubmodelByName(@PathVariable String submodelName) {
 		return submodelService.findSubmodelByName(submodelName);
 	}
-	
-	@GetMapping(value = "/submodels/{submodelName}/sample")
-	public Response getSubmodelCSV(@PathVariable String submodelName, @RequestParam(value = "type", required = true) String type) {
-		
-		File file  = submodelService.findSubmodelCsv(submodelName,type);
-		
-		return Response.ok(file).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file)
-								.header(HttpHeaders.CONTENT_TYPE, "text/csv").build();
-	}
 
 }

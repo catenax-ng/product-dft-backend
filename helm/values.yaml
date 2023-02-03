@@ -76,7 +76,7 @@ ingress:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
-    nginx.ingress.kubernetes.io/enable-cors: 'false'
+    nginx.ingress.kubernetes.io/enable-cors: 'true'
 
  
 postgres:

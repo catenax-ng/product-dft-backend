@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: ghcr.io/catenax-ng/tx-dft-backend-qa
   pullPolicy: Always
-  tag: "release3.1-dst_pip7_itr5"
+  tag: "release3.1-dst_pip7_itr4"
 
 imagePullSecrets: []
 

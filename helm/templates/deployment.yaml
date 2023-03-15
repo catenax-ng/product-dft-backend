@@ -56,7 +56,7 @@ spec:
                 secretKeyRef:
                   name: dtf-digitaltwins-secrets
                   key: SecurityOauthResource
-            - name: KEYCLOAK_RESOURCE_CLIENTID
+            - name: KEYCLOAK_CLIENTID
               valueFrom:
                 secretKeyRef:
                   name: dtf-digitaltwins-secrets

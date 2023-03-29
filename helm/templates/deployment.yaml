@@ -51,11 +51,16 @@ spec:
                 secretKeyRef:
                   name: dft-postgresql-secrets
                   key: password
-            #- name: SPRING_DATASOURCE_POSTGRESPASSWORD
-            #  valueFrom:
-               # secretKeyRef:
-                #  name: dft-postgresql-secrets
-                 # key: postgresPassword
+            - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: SecurityOauthResource
+            - name: KEYCLOAK_CLIENTID
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: KeycloakResourceClientid
             - name: DIGITAL-TWINS_HOSTNAME
               valueFrom:
                 secretKeyRef:
@@ -153,16 +158,21 @@ spec:
                 secretKeyRef:
                   name: dft-edc-secrets
                   key: edcconsapiheader
-            - name: CLIENTID
+            - name: CONNECTOR_DISCOVERY_CLIENTID
               valueFrom:
                 secretKeyRef:
                   name: dtf-digitaltwins-secrets
-                  key: portalApiID 
-            - name: CLIENTSECRET
+                  key: ConnectorDiscoveryClientid
+            - name: CONNECTOR_DISCOVERY_CLIENTSECRET
               valueFrom:
                 secretKeyRef:
                   name: dtf-digitaltwins-secrets
-                  key: portalApisecret  
+                  key: ConnectorDiscoveryClientSecret
+            - name: CONNECTOR_DISCOVERY_TOKEN-URL
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: ConnectorDiscoveryTokenUrl
             - name: PARTNER_POOL_HOSTNAME
               valueFrom:
                 secretKeyRef:

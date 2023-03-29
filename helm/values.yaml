@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: ghcr.io/catenax-ng/tx-dft-backend
   pullPolicy: Always
-  tag: "1.9.0"
+  tag: "DST_PIP8_ITR3"
 
 imagePullSecrets: []
 

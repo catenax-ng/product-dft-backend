@@ -11,12 +11,11 @@ image:
   # -- Which derivate of the edc control-plane to use.
   # One of: [ghcr.io/catenax-ng/product-edc/edc-controlplane-postgresql-hashicorp-vault, ghcr.io/catenax-ng/product-edc/edc-controlplane-postgresql, ghcr.io/catenax-ng/product-edc/edc-controlplane-memory]
   repository: ghcr.io/catenax-ng/product-edc/edc-controlplane-postgresql
-
   
   # -- [Kubernetes image pull policy](https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy) to use
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
-  tag: "1.5.0"
+  tag: "sha-3ef2960"
 
 imagePullSecret:
   # -- Image pull secret to create to [obtain the container image from private registries](https://kubernetes.io/docs/concepts/containers/images/#using-a-private-registry)

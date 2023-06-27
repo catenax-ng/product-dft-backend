@@ -213,6 +213,11 @@ spec:
                 secretKeyRef:
                   name: dft-edc-secrets
                   key: edcconsumerpath
+            - name: EDC_CONSUMER_MANAGEMENTPATH
+              valueFrom:
+                secretKeyRef:
+                  name: dft-edc-secrets
+                  key: edcconsumermanagementpath
           ports:
             - name: http
               containerPort: 8080

@@ -208,6 +208,11 @@ spec:
                 secretKeyRef:
                   name: dtf-digitaltwins-secrets
                   key: discoverygrantType
+            - name: EDC_CONSUMER_PROTOCOL_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: dft-edc-secrets
+                  key: edcconsumerpath
           ports:
             - name: http
               containerPort: 8080

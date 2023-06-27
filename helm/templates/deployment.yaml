@@ -218,6 +218,8 @@ spec:
                 secretKeyRef:
                   name: dft-edc-secrets
                   key: edcconsumermanagementpath
+            - name: EDC_MANAGEMENTPATH
+              value: /data/v2
           ports:
             - name: http
               containerPort: 8080

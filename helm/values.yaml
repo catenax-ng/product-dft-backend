@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: ghcr.io/catenax-ng/tx-managed-simple-data-exchanger-backend
   pullPolicy: Always
-  tag: "support_edc_0.4.1"
+  tag: "DST_PIP9_ITR3"
 
 imagePullSecrets: []
 

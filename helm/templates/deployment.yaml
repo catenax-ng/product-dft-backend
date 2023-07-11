@@ -183,6 +183,46 @@ spec:
                 secretKeyRef:
                   name: dtf-digitaltwins-secrets
                   key: portalpoolhostURL 
+            - name: BPNDISCOVERY_HOSTNAME
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: bpndiscoveryhostname
+            - name: DISCOVERY_AUTHENTICATION_URL
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: discoveryauthenticationurl
+            - name: DISCOVERY_CLIENTID
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: discoveryclientId
+            - name: DISCOVERY_CLIENTSECRET
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: discoveryclientSecret
+            - name: DISCOVERY_GRANTTYPE
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: discoverygrantType
+            - name: EDC_CONSUMER_PROTOCOL_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: dft-edc-secrets
+                  key: edcconsumerpath
+            - name: EDC_CONSUMER_MANAGEMENTPATH
+              valueFrom:
+                secretKeyRef:
+                  name: dft-edc-secrets
+                  key: edcconsumermanagementpath
+            - name: EDC_MANAGEMENTPATH
+              valueFrom:
+                secretKeyRef:
+                  name: dft-edc-secrets
+                  key: edcmanagementpath
           ports:
             - name: http
               containerPort: 8080

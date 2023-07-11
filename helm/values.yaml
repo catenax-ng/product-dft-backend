@@ -5,9 +5,9 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/catenax-ng/tx-dft-backend
+  repository: ghcr.io/catenax-ng/tx-managed-simple-data-exchanger-backend
   pullPolicy: Always
-  tag: "argocd-sde-deployment"
+  tag: "support_edc_5.x"
 
 imagePullSecrets: []
 

@@ -173,11 +173,6 @@ spec:
                 secretKeyRef:
                   name: dtf-digitaltwins-secrets
                   key: ConnectorDiscoveryTokenUrl
-            - name: PARTNER_POOL_HOSTNAME
-              valueFrom:
-                secretKeyRef:
-                  name: dtf-digitaltwins-secrets
-                  key: partnerpoolhostURL
             - name: PORTAL_BACKEND_HOSTNAME 
               valueFrom:
                 secretKeyRef:
@@ -223,6 +218,31 @@ spec:
                 secretKeyRef:
                   name: dft-edc-secrets
                   key: edcmanagementpath
+            - name: PARTNER_POOL_HOSTNAME
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: partnerpoolhostname
+            - name: PARTNER_POOL_AUTHENTICATION_URL
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: partnerpoolauthenticationurl
+            - name: PARTNER_POOL_CLIENTID
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: partnerpoolclientId
+            - name: PARTNER_POOL_CLIENTSECRET
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: partnerpoolclientSecret
+            - name: PARTNER_POOL_GRANTTYPE
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: partnerpoolclientSecret 
           ports:
             - name: http
               containerPort: 8080

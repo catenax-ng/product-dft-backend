@@ -242,7 +242,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: dtf-digitaltwins-secrets
-                  key: partnerpoolclientSecret 
+                  key: partnerpoolgrantType 
           ports:
             - name: http
               containerPort: 8080

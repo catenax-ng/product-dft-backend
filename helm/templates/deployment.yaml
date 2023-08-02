@@ -243,6 +243,31 @@ spec:
                 secretKeyRef:
                   name: dtf-digitaltwins-secrets
                   key: partnerpoolgrantType 
+            - name: PORTAL_BACKEND_HOSTNAME
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: portalbackendhostname
+            - name: PORTAL_BACKEND_AUTHENTICATION_URL
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: portalbackendauthenticationurl
+            - name: PORTAL_BACKEND_CLIENTID
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: portalbackendclientId						
+            - name: PORTAL_BACKEND_CLIENTSECRET
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: portalbackendclientSecret
+            - name: PORTAL_BACKEND_GRANTTYPE
+              valueFrom:
+                secretKeyRef:
+                  name: dtf-digitaltwins-secrets
+                  key: portalbackendgrantType
           ports:
             - name: http
               containerPort: 8080

@@ -69,7 +69,7 @@ readinessProbe:
   timeoutSeconds: 1
 
 ingress:
-  enabled: false
+  enabled: true
   host: dft-api.int.demo.catena-x.net
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP

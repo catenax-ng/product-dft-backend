@@ -268,6 +268,101 @@ spec:
                 secretKeyRef:
                   name: dtf-digitaltwins-secrets
                   key: portalbackendgrantType
+            - name: MAIL_SMTP_USERNAME
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: mailSmtpUsername
+            - name: MAIL_SMTP_PASSWORD
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: mailSmtpPassword				   
+            - name: MAIL_SMTP_HOST
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: mailSmtpHost
+            - name: MAIL_SMTP_PORT
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: mailSmtpPort
+            - name: MAIL_TO_ADDRESS
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: mailToAddress
+            - name: MAIL_CC_ADDRESS
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: mailCcAddress
+            - name: MAIL_FROM_ADDRESS
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: mailFromAddress
+            - name: MAIL_REPLYTO_ADDRESS
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: mailReplytoAddress
+            - name: MAIL_SMTP_STARTTLS_ENABLE
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: mailSmtpStarttlsEnable
+            - name: MAIL_SMTP_AUTH
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: mailSmtpAuth
+            - name: SFTP_HOST
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: sftpHost
+            - name: SFTP_PORT
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: sftpPort
+            - name: SFTP_USERNAME
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: sftpUsername
+            - name: SFTP_PASSWORD
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: sftpPassword
+            - name: SFTP_LOCATION_TOBEPROCESSED
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: sftpLocationTobeprocessed
+            - name: SFTP_LOCATION_INPROGRESS
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: sftpLocationInprogress
+            - name: SFTP_LOCATION_SUCCESS
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: sftpLocationSuccess
+            - name: SFTP_LOCATION_PARTIALSUCESS
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: sftpLocationPartialsucess
+            - name: SFTP_LOCATION_FAILED
+              valueFrom:
+                 secretKeyRef:
+                    name: dtf-digitaltwins-secrets
+                    key: sftpLocationFailed
           ports:
             - name: http
               containerPort: 8080

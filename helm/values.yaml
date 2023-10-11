@@ -5,9 +5,9 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/catenax-ng/tx-managed-simple-data-exchanger-backend
+  repository: hcr.io/catenax-ng/tx-managed-simple-data-exchanger-backend
   pullPolicy: Always
-  tag: "2.2.2"
+  tag: "2.3.0"
 
 imagePullSecrets: []
 
